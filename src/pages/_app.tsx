@@ -7,6 +7,8 @@ import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { GoogleAnalytics } from 'nextjs-google-analytics';
+
 const queryClient = new QueryClient();
 
 const emotionCache = createCache({
@@ -20,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <ChakraProvider>
           <Layout>
+            <GoogleAnalytics trackPageViews />
             <Component {...pageProps} />
           </Layout>
         </ChakraProvider>

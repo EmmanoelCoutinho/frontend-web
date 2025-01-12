@@ -95,13 +95,14 @@ function Header({ startsWithAdmin }: HeaderProps) {
           pr={isLargerThan1024 ? 8 : 4}
         >
           {!startsWithAdmin ? (
-            <DefaultButton
-              onClinkFunc={onOpen}
-              text="Buscar Imóvel"
-              maxWidth={200}
-              isSearchButton
-              orangeSchema
-            />
+            // <DefaultButton
+            //   onClinkFunc={onOpen}
+            //   text="Buscar Imóvel"
+            //   maxWidth={200}
+            //   isSearchButton
+            //   orangeSchema
+            // />
+            <></>
           ) : (
             <div className="relative flex w-12 h-12 bg-red-500 rounded-full overflow-hidden">
               <Image

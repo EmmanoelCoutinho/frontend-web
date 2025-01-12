@@ -56,7 +56,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <div className="w-full h-[650px] mb-[700px] md:mb-[400px] lg:mb-[400px]">
+      {/* mb-[700px] md:mb-[400px] lg:mb-[400px] */}
+      <div className="w-full h-[650px] ">
         <Image
           src={randomPicture()}
           style={{ objectFit: 'cover' }}
@@ -65,8 +66,7 @@ export default function Home() {
           alt="Imagem de fundo com a cidade de Belém"
         />
       </div>
-
-      <div className="absolute top-[550px] left-[50%] transform -translate-x-1/2 flex flex-col mx-auto items-center py-3 px-4 w-full h-fit lg:max-w-[950px] lg:h-[500px] bg-orange-600 text-[#FBFBFA] rounded-lg">
+      {/* <div className="absolute top-[550px] left-[50%] transform -translate-x-1/2 flex flex-col mx-auto items-center py-3 px-4 w-full h-fit lg:max-w-[950px] lg:h-[500px] bg-orange-600 text-[#FBFBFA] rounded-lg">
         <span className="text-3xl font-medium mt-4">
           Encontre o Imóvel dos seus sonhos
         </span>
@@ -131,7 +131,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col items-center w-full lg:h-28">
               <div className="flex  items-center  w-full h-full md:justify-center">
-                {/* <span className="font-medium text-lg">Apenas Financiavéis?</span> */}
+                {/* <span className="font-medium text-lg">Apenas Financiavéis?</span> 
                 <Checkbox
                   size="lg"
                   colorScheme="green"
@@ -152,7 +152,7 @@ export default function Home() {
             </span>
           </SimpleGrid>
         </form>
-      </div>
+      </div> */}
       <div className="flex flex-col w-full h-full items-center mt-10">
         <span className="flex justify-center items-center gap-2 text-zinc-600 font-medium text-3xl border-b-2 border-zinc-600 pb-2 px-4">
           <TbHomeDollar />

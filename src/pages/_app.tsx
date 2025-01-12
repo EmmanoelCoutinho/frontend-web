@@ -22,7 +22,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <ChakraProvider>
           <Layout>
-            <GoogleAnalytics trackPageViews />
+            <GoogleAnalytics
+              trackPageViews
+              gaMeasurementId={process.env.NEXT_PUBLIC_GA_ID}
+            />
             <Component {...pageProps} />
           </Layout>
         </ChakraProvider>

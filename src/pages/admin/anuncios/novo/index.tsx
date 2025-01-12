@@ -120,7 +120,7 @@ function NovoAnuncio() {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      setTemporaryImages(response?.data);
+      setTemporaryImages((prev) => [...prev, ...response?.data]);
     } catch (error) {
       console.error('Erro ao enviar imagens:', error);
 
@@ -218,7 +218,7 @@ function NovoAnuncio() {
         (image) => image.publicId !== publicId
       );
 
-      setTemporaryImages(newImages);
+      setTemporaryImages((prev) => [...prev, ...newImages]);
 
       toaster({
         title: 'Sucesso!',

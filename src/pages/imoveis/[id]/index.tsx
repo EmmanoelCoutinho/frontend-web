@@ -56,7 +56,7 @@ function ImovelView() {
               <span className="flex justify-center items-center w-[120px] h-[30px] bg-orange-600 text-white font-medium rounded-md z-50 mb-6">
                 Código: {property?.id}
               </span>
-              <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4">
+              <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
                 Descrição do Imóvel
               </span>
               <Box whiteSpace={'pre-wrap'}>{property?.description}</Box>
@@ -104,7 +104,8 @@ function ImovelView() {
                 <span className="flex items-center gap-2">
                   <IconFrame icon={<FaLocationDot size={iconSize} />} />
                   <span className="text-zinc-600 font-medium">
-                    {property?.address?.logradouro},{' '}
+                    {property?.address?.logradouro}
+                    {property?.address?.logradouro && ','}{' '}
                     {property?.address?.localidade}/{property?.address?.uf}
                   </span>
                 </span>

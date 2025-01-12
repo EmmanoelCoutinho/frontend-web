@@ -38,7 +38,8 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
           <span className="flex items-center gap-2">
             <IconFrame icon={<FaLocationDot size={iconSize} />} />
             <span className="text-zinc-600 font-medium">
-              {propertyDetails?.address?.logradouro},{' '}
+              {propertyDetails?.address?.logradouro}
+              {propertyDetails?.address?.logradouro && ','}{' '}
               {propertyDetails?.address?.localidade}/
               {propertyDetails?.address?.uf}
             </span>

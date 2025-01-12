@@ -1,4 +1,5 @@
 import { redirectWhatsapp } from '@/utils/redirectWhatsapp';
+import { Image } from '@chakra-ui/react';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { GiTalk } from 'react-icons/gi';
 import { IoLogoInstagram } from 'react-icons/io5';
@@ -13,7 +14,15 @@ function Footer() {
   return (
     <div>
       <div className="grid grid-cols-3 bg-gray-800 p-4 w-full  z-10 text-white font-medium">
-        <div className="flex justify-center items-center">LOGO</div>
+        <div className="flex justify-center items-center">
+          <Image
+            src={'/images/logo-si.png'}
+            style={{ objectFit: 'cover' }}
+            width={'48px'}
+            height={'48px'}
+            alt="Logo SantosImóveis"
+          />
+        </div>
 
         <div className="flex justify-center items-center gap-6 invisible lg:visible">
           <span

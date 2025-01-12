@@ -111,7 +111,7 @@ function NovoAnuncio() {
   };
 
   const getPropertyData = async () => {
-    try {
+    try {      
       const { data } = await api.get(`/properties/${id}`);
 
       setValue('title', data.title);
@@ -138,6 +138,7 @@ function NovoAnuncio() {
       setValue('financeable', data.financeable.toString());
       setValue('price', data.price.toString());
       setValue('address', data.address?.cep.toString());
+      setPropertyAddress(data.address);
       setValue('realtorId', data.realtorId.toString());
 
       setValue('property_features.serviceArea', data.property_features.serviceArea);
@@ -179,8 +180,6 @@ function NovoAnuncio() {
     }
   };
 
-  console.log(temporaryImages);
-
   const handleSendImages = async (files: FileList) => {
     try {
       setLoadingUpdate(true);
@@ -220,6 +219,8 @@ function NovoAnuncio() {
   };
 
   const onSubmit: SubmitHandler<TypeFormData> = (data) => {
+    console.log(data);
+    
     const formattedData = {
       ...data,
       images: temporaryImages.map((image) => image.url),

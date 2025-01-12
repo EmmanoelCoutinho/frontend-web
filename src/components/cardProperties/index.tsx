@@ -22,7 +22,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
       </span>
       <div className="w-full min-h-[350px] overflow-hidden">
         <Image
-          src={propertyDetails.images[0]}
+          src={propertyDetails.images[propertyDetails.ad_image_cover]}
           style={{ objectFit: 'cover', transition: 'transform 0.5s ease' }}
           width={'100%'}
           height={'100%'}

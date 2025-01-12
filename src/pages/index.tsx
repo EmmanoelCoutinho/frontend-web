@@ -8,6 +8,8 @@ import {
   defaultFiltersSchema,
   TypeFormData,
 } from '@/schemas/defaultFiltersSchema';
+import { api } from '@/services/axios';
+import { Property } from '@/types/propertiesType';
 import { priceMask } from '@/utils/priceMask';
 import { randomPicture } from '@/utils/randomPicture';
 import {
@@ -21,10 +23,12 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TbHomeDollar } from 'react-icons/tb';
 
 export default function Home() {
+  const [properties, setProperties] = useState<Property[]>([]);
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
   const {
@@ -53,6 +57,17 @@ export default function Home() {
   };
 
   // console.log(errors);
+
+  useEffect(() => {
+      const getAllProperties = async () => {
+        const response = await api.get('properties');
+        const data = response.data;
+  
+        setProperties(data.slice(0,4));
+      };
+  
+      getAllProperties();
+    }, []);
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -164,10 +179,9 @@ export default function Home() {
           spacingY={10}
           spacingX={3}
         >
-          <CardProperties imageSrc="/images/casa1.jpg" />
-          <CardProperties imageSrc="/images/casa2.jpg" />
-          <CardProperties imageSrc="/images/casa3.jpg" />
-          <CardProperties imageSrc="/images/casa1.jpg" />
+          {properties?.map((item, index) => (
+            <CardProperties key={index} propertyDetails={item} />
+          ))}
         </SimpleGrid>
         <Link
           href="/imoveis"

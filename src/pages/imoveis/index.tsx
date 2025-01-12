@@ -1,10 +1,6 @@
 import CardProperties from '@/components/cardProperties';
 import DefaultSelect from '@/components/deafultSelect';
-import {
-  Checkbox,
-  SimpleGrid,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Checkbox, SimpleGrid, useDisclosure } from '@chakra-ui/react';
 import { TbHomeDollar } from 'react-icons/tb';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import DefaultButton from '@/components/defaultButton';
@@ -18,8 +14,13 @@ import { IoFilterSharp } from 'react-icons/io5';
 import { priceMask } from '@/utils/priceMask';
 import PageHeader from '@/components/pageHeader';
 import FilterDrawer from '@/components/filtersDrawer';
+import { useEffect, useState } from 'react';
+import { api } from '@/services/axios';
+import { Property } from '@/types/propertiesType';
 
 function Imoveis() {
+  const [properties, setProperties] = useState<Property[]>([]);
+
   const {
     register,
     handleSubmit,
@@ -27,8 +28,6 @@ function Imoveis() {
     formState: { errors },
   } = useForm<TypeFormData>({ resolver: zodResolver(defaultFiltersSchema) });
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-   
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -38,7 +37,7 @@ function Imoveis() {
     const formattedValue = priceMask(rawValue);
     setValue(field, formattedValue);
   };
-  
+
   const onSubmit: SubmitHandler<TypeFormData> = (data) => {
     const formattedData = {
       ...data,
@@ -46,14 +45,25 @@ function Imoveis() {
       maxPrice: data.maxPrice?.replace(/,/g, '') ?? '',
     };
     console.log(formattedData);
-  };  
+  };
+
+  useEffect(() => {
+    const getAllProperties = async () => {
+      const response = await api.get('properties');
+      const data = response.data;
+
+      setProperties(data);
+    };
+
+    getAllProperties();
+  }, []);
 
   return (
     <>
       <div className="flex flex-col w-full h-full">
         <PageHeader title="Imóveis a venda" />
         <div className="flex flex-col md:flex-row w-full h-full">
-          <div className="hidden md:flex flex-col w-full max-w-[250px] h-fit shadow-lg bg-white rounded-r-lg overflow-x-hidden">
+          {/* <div className="hidden md:flex flex-col w-full max-w-[250px] h-fit shadow-lg bg-white rounded-r-lg overflow-x-hidden">
             <span className="flex justify-center items-center font-medium text-zinc-600 bg-gray-300 w-full h-10">
               Buscar por Categorias
             </span>
@@ -116,7 +126,7 @@ function Imoveis() {
                 />
               </div>
             </form>
-          </div>
+          </div> */}
           <span
             onClick={onOpen}
             className="fixed bottom-6 right-6 z-10 flex justify-center items-center font-medium text-white bg-orange-600 w-14 h-14 rounded-full md:hidden"
@@ -130,18 +140,9 @@ function Imoveis() {
               spacingY={10}
               spacingX={3}
             >
-              <CardProperties imageSrc="/images/casa1.jpg" />
-              <CardProperties imageSrc="/images/casa2.jpg" />
-              <CardProperties imageSrc="/images/casa3.jpg" />
-              <CardProperties imageSrc="/images/casa1.jpg" />
-              <CardProperties imageSrc="/images/casa1.jpg" />
-              <CardProperties imageSrc="/images/casa2.jpg" />
-              <CardProperties imageSrc="/images/casa3.jpg" />
-              <CardProperties imageSrc="/images/casa1.jpg" />
-              <CardProperties imageSrc="/images/casa1.jpg" />
-              <CardProperties imageSrc="/images/casa2.jpg" />
-              <CardProperties imageSrc="/images/casa3.jpg" />
-              <CardProperties imageSrc="/images/casa1.jpg" />
+              {properties?.map((item, index) => (
+                <CardProperties key={index} propertyDetails={item} />
+              ))}
             </SimpleGrid>
           </div>
         </div>

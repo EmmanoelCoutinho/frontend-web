@@ -36,7 +36,33 @@ export interface Realtor {
 }
 
 export interface Property {
-  map(arg0: (property: Property) => { actions: import("react").JSX.Element; id: number; title: string; modality: string; price: number; condon_price: number; iptu: number; images: string[]; ad_image_cover: number; description: string; Property_type: string; Property_subtype: string; financeable: boolean; bedroom: number; bathroom: number; total_area: number; useful_area: number; parking_spaces: number; videotour_url: string; realtorId: number; property_features: PropertyFeatures; condo_features: CondoFeatures; Realtor: Realtor; }): unknown;
+  map(
+    arg0: (property: Property) => {
+      actions: import('react').JSX.Element;
+      id: number;
+      title: string;
+      modality: string;
+      price: number;
+      condon_price: number;
+      iptu: number;
+      images: string[];
+      ad_image_cover: number;
+      description: string;
+      Property_type: string;
+      Property_subtype: string;
+      financeable: boolean;
+      bedroom: number;
+      bathroom: number;
+      total_area: number;
+      useful_area: number;
+      parking_spaces: number;
+      videotour_url: string;
+      realtorId: number;
+      property_features: PropertyFeatures;
+      condo_features: CondoFeatures;
+      Realtor: Realtor;
+    }
+  ): unknown;
   id: number;
   title: string;
   modality: string;
@@ -59,4 +85,19 @@ export interface Property {
   property_features: PropertyFeatures;
   condo_features: CondoFeatures;
   Realtor: Realtor;
+  address: {
+    bairro: string;
+    cep: string;
+    complemento: string;
+    ddd: string;
+    estado: string;
+    gia: string;
+    ibge: string;
+    localidade: string;
+    logradouro: string;
+    regiao: string;
+    siafi: string;
+    uf: string;
+    unidade: string;
+  };
 }

@@ -297,10 +297,13 @@ function NovoAnuncio() {
     );
   };
 
-  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMonetaryInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: 'price' | 'condon_price' | 'iptu'
+  ) => {
     const input = event.target.value.replace(/\D/g, '');
     const formattedPrice = priceMask(input);
-    setValue('price', formattedPrice);
+    setValue(field, formattedPrice);
   };
 
   const getAddress = async (zipCode: string) => {
@@ -485,14 +488,24 @@ function NovoAnuncio() {
           </FormControl>
           <FormControl isInvalid={!!errors.condon_price}>
             <FormLabel>Condomínio (R$)</FormLabel>
-            <DefaultTextInput register={{ ...register('condon_price') }} />
+            <DefaultTextInput
+              register={{ ...register('condon_price') }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleMonetaryInputChange(e, 'condon_price')
+              }
+            />
             <FormErrorMessage>
               {errors.condon_price && errors.condon_price.message}
             </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={!!errors.iptu}>
             <FormLabel>IPTU (R$)</FormLabel>
-            <DefaultTextInput register={{ ...register('iptu') }} />
+            <DefaultTextInput
+              register={{ ...register('iptu') }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleMonetaryInputChange(e, 'iptu')
+              }
+            />
             <FormErrorMessage>
               {errors.iptu && errors.iptu.message}
             </FormErrorMessage>
@@ -623,7 +636,9 @@ function NovoAnuncio() {
             <FormLabel>Preço (R$)</FormLabel>
             <DefaultTextInput
               register={{ ...register('price') }}
-              onChange={handlePriceChange}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleMonetaryInputChange(e, 'price')
+              }
             />
             <FormErrorMessage>
               {errors.price && errors.price.message}

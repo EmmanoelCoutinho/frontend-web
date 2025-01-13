@@ -1,4 +1,5 @@
 export const numbersOptions = [
+  { title: '0', value: 0 },
   { title: '1', value: 1 },
   { title: '2', value: 2 },
   { title: '3', value: 3 },

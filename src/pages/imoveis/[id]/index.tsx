@@ -49,7 +49,9 @@ function ImovelView() {
       <PageHeader title={property?.title ?? ''} />
       <div className="flex flex-col w-fit h-full px-4 mx-auto">
         <div className="flex flex-col w-full h-fit justify-center gap-4 md:flex-row">
-          <div className="flex flex-col w-full h-full max-w-[1040px]">
+          <div
+            className={`flex flex-col w-full h-full max-w-[1040px] ${property?.images?.length === 1 && 'items-center'}`}
+          >
             <ImageSliderShow
               images={property?.images || []}
               totalImages={property?.images?.length || 0}

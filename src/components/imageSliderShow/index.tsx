@@ -41,9 +41,9 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
   };
 
   const handleClose = () => {
-    setThumbnailPosition(-3)
-    onClose()
-  }
+    setThumbnailPosition(-3);
+    onClose();
+  };
 
   const handlePrev = () => {
     setCurrentImage((prevIndex) =>
@@ -70,6 +70,8 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
     }
   }, [currentImage, images.length]);
 
+  console.log(totalImages)
+
   return (
     <>
       <div className="flex w-fit h-fit justify-center gap-2">
@@ -80,29 +82,72 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
           } max-h-[520px]`}
           onClick={() => handleOpen(0)}
         />
-        {isLargerThan840 && (
+        {isLargerThan840 && (totalImages === 2 || totalImages === 3 || totalImages === 4) && (
+          <ImageContainer
+            src={images[1]}
+            sizeClassname={`${
+              isLargerThan840 ? 'max-w-[505px]' : ''
+            } max-h-[520px]`}
+            onClick={() => handleOpen(1)}
+          />
+        )}
+        {isLargerThan840 && totalImages === 3 && (
+          <ImageContainer
+            src={images[2]}
+            sizeClassname={`${
+              isLargerThan840 ? 'max-w-[505px]' : ''
+            } max-h-[520px]`}
+            onClick={() => handleOpen(2)}
+          />
+        )}
+        {isLargerThan840 && totalImages === 4 && (
+          <SimpleGrid w={600} columns={1} spacingX={2} spacingY={2}>
+            {images[1] && (
+              <ImageContainer
+                src={images[1]}
+                sizeClassname={smallSize}
+                onClick={() => handleOpen(1)}
+              />
+            )}
+            {images[2] && (
+              <ImageContainer
+                src={images[2]}
+                sizeClassname={smallSize}
+                onClick={() => handleOpen(2)}
+              />
+            )}
+          </SimpleGrid>
+        )}
+        {isLargerThan840 && totalImages >= 5 && (
           <SimpleGrid columns={2} spacingX={2} spacingY={2}>
-            <ImageContainer
-              src={images[1]}
-              sizeClassname={smallSize}
-              onClick={() => handleOpen(1)}
-            />
-            <ImageContainer
-              src={images[2]}
-              sizeClassname={smallSize}
-              onClick={() => handleOpen(2)}
-            />
-            <ImageContainer
-              src={images[3]}
-              sizeClassname={smallSize}
-              onClick={() => handleOpen(3)}
-            />
-            <ImageContainer
-              src={images[4]}
-              sizeClassname={smallSize}
-              showMoreImagesNumbers={extraImagensNumber}
-              onClick={() => handleOpen(4)}
-            />
+            {images[1] && (
+              <ImageContainer
+                src={images[1]}
+                sizeClassname={smallSize}
+                onClick={() => handleOpen(1)}
+              />
+            )}
+            {images[2] && (
+              <ImageContainer
+                src={images[2]}
+                sizeClassname={smallSize}
+                onClick={() => handleOpen(2)}
+              />
+            )}
+            {images[3] && (
+              <ImageContainer
+                src={images[3]}
+                sizeClassname={smallSize}
+                onClick={() => handleOpen(3)}
+              />
+            )}
+            {images[4] && (
+              <ImageContainer
+                src={images[4]}
+                sizeClassname={smallSize}
+                onClick={() => handleOpen(4)}
+              />
+            )}
           </SimpleGrid>
         )}
       </div>

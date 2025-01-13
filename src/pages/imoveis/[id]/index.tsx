@@ -8,7 +8,8 @@ import { Property } from '@/types/propertiesType';
 import { priceMask } from '@/utils/priceMask';
 import { redirectWhatsapp } from '@/utils/redirectWhatsapp';
 import { translateEnumProperty } from '@/utils/translateEnumProperty';
-import { Box, SimpleGrid } from '@chakra-ui/react';
+import { verifyAndAddPlus } from '@/utils/verifyAndAddPlus';
+import { Box, SimpleGrid, useMediaQuery } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaBed, FaCar, FaShower, FaWhatsapp } from 'react-icons/fa';
@@ -17,6 +18,8 @@ import { FaLocationDot, FaRulerCombined } from 'react-icons/fa6';
 const iconSize = 16;
 
 function ImovelView() {
+  const [isLargerThan840] = useMediaQuery('(min-width: 840px)');
+
   const router = useRouter();
   const { id } = router.query;
 
@@ -45,7 +48,7 @@ function ImovelView() {
     <div className="flex flex-col w-full h-full text-zinc-600">
       <PageHeader title={property?.title ?? ''} />
       <div className="flex flex-col w-fit h-full px-4 mx-auto">
-        <div className="flex w-full h-fit justify-center gap-4">
+        <div className="flex flex-col w-full h-fit justify-center gap-4 md:flex-row">
           <div className="flex flex-col w-full h-full max-w-[1040px]">
             <ImageSliderShow
               images={property?.images || []}
@@ -64,7 +67,7 @@ function ImovelView() {
           </div>
           <div className="flex flex-col gap-6 w-full h-full max-w-[400px] ">
             <div className="flex flex-col w-full h-full max-h-[300px] bg-gray-200 p-4 rounded-lg gap-2">
-              <span className="flex flex-row justify-between items-center w-full h-[50px] rounded-md bg-zinc-600 text-white px-4">
+              <span className="flex flex-row justify-between items-center w-full h-[50px] rounded-md bg-zinc-600 text-white px-4 text-xl md:text-base">
                 <span className="font-bold">
                   {property?.Property_type
                     ? translateEnumProperty(property.Property_type)
@@ -72,7 +75,7 @@ function ImovelView() {
                 </span>
                 <span>Código: {property?.id}</span>
               </span>
-              <span className="flex flex-row justify-between items-center w-full h-[50px] px-2">
+              <span className="flex flex-col justify-start items-start w-full h-[50px] px-2 md:flex-row md:justify-between md:items-center">
                 <span
                   className={`font-bold uppercase ${
                     property?.financeable ? 'text-green-600' : 'text-red-600'
@@ -110,33 +113,39 @@ function ImovelView() {
                   </span>
                 </span>
                 <SimpleGrid columns={3} className="mt-6">
-                  <span className="flex items-center gap-2">
-                    <IconFrame icon={<FaBed size={iconSize} />} />
-                    <div className="flex flex-col justify-center items-center">
-                      <span className="text-zinc-600 font-medium text-sm">
-                        {property?.bedroom}
-                      </span>
-                      <span className="text-xs">Quarto(s)</span>
-                    </div>
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <IconFrame icon={<FaShower size={iconSize} />} />
-                    <div className="flex flex-col justify-center items-center">
-                      <span className="text-zinc-600 font-medium text-sm">
-                        {property?.bathroom}
-                      </span>
-                      <span className="text-xs">Banheiro(s)</span>
-                    </div>
-                  </span>
-                  <span className="flex items-center gap-2 pl-4">
-                    <IconFrame icon={<FaCar size={iconSize} />} />
-                    <div className="flex flex-col justify-center items-center">
-                      <span className="text-zinc-600 font-medium text-sm">
-                        {property?.parking_spaces}
-                      </span>
-                      <span className="text-xs">Vaga(s)</span>
-                    </div>
-                  </span>
+                  {property?.bedroom && (
+                    <span className="flex items-center gap-2">
+                      <IconFrame icon={<FaBed size={iconSize} />} />
+                      <div className="flex flex-col justify-center items-center">
+                        <span className="text-zinc-600 font-medium text-sm">
+                          {verifyAndAddPlus(property?.bedroom)}
+                        </span>
+                        <span className="text-xs">Quarto(s)</span>
+                      </div>
+                    </span>
+                  )}
+                  {property?.bathroom && (
+                    <span className="flex items-center gap-2">
+                      <IconFrame icon={<FaShower size={iconSize} />} />
+                      <div className="flex flex-col justify-center items-center">
+                        <span className="text-zinc-600 font-medium text-sm">
+                          {verifyAndAddPlus(property?.bathroom)}
+                        </span>
+                        <span className="text-xs">Banheiro(s)</span>
+                      </div>
+                    </span>
+                  )}
+                  {property?.parking_spaces && (
+                    <span className="flex items-center gap-2 pl-4">
+                      <IconFrame icon={<FaCar size={iconSize} />} />
+                      <div className="flex flex-col justify-center items-center">
+                        <span className="text-zinc-600 font-medium text-sm">
+                          {verifyAndAddPlus(property?.parking_spaces)}
+                        </span>
+                        <span className="text-xs">Vaga(s)</span>
+                      </div>
+                    </span>
+                  )}
                 </SimpleGrid>
                 <SimpleGrid columns={3} className="mt-6">
                   {property?.useful_area && (

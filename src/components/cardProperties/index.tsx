@@ -4,6 +4,8 @@ import IconFrame from "../iconFrame";
 import { FaBed, FaCar, FaLocationDot, FaShower } from "react-icons/fa6";
 import { Property } from "@/types/propertiesType";
 import { priceMask } from "@/utils/priceMask";
+import { verifyAndAddPlus } from "@/utils/verifyAndAddPlus";
+import { translateEnumProperty } from "@/utils/translateEnumProperty";
 
 function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
   const iconSize = 16;
@@ -33,7 +35,9 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
         />
       </div>
       <div className="flex flex-col w-full h-full p-2">
-        <span className="text-2xl font-medium">Casa</span>
+        <span className="text-2xl font-medium">
+          {translateEnumProperty(propertyDetails.Property_type)}
+        </span>
         <div className="flex flex-col w-full mt-6">
           <span className="flex items-center gap-2">
             <IconFrame icon={<FaLocationDot size={iconSize} />} />
@@ -49,7 +53,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
               <IconFrame icon={<FaBed size={iconSize} />} />
               <div className="flex flex-col justify-center items-center">
                 <span className="text-zinc-600 font-medium text-sm">
-                  {propertyDetails.bedroom}
+                  {verifyAndAddPlus(propertyDetails.bedroom)}
                 </span>
                 <span className="text-xs">Quarto(s)</span>
               </div>
@@ -58,7 +62,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
               <IconFrame icon={<FaShower size={iconSize} />} />
               <div className="flex flex-col justify-center items-center">
                 <span className="text-zinc-600 font-medium text-sm">
-                  {propertyDetails.bathroom}
+                  {verifyAndAddPlus(propertyDetails.bathroom)}
                 </span>
                 <span className="text-xs">Banheiro(s)</span>
               </div>
@@ -67,7 +71,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
               <IconFrame icon={<FaCar size={iconSize} />} />
               <div className="flex flex-col justify-center items-center">
                 <span className="text-zinc-600 font-medium text-sm">
-                  {propertyDetails.parking_spaces}
+                  {verifyAndAddPlus(propertyDetails.parking_spaces)}
                 </span>
                 <span className="text-xs">Vaga(s)</span>
               </div>

@@ -5,9 +5,9 @@ export const translateEnumProperty = (enumValue: string) => {
   switch (enumValue) {
     case 'HOUSE':
       return 'Casa';
-    case 'APARTAMENT':
+    case 'APARTMENT':
       return 'Apartamento';
     case 'LAND':
-      return 'Terreno'
+      return 'Terreno';
   }
 };

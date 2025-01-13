@@ -10,15 +10,13 @@ export const defaultProperySchema = z.object({
   Property_type: z.string(),
   Property_subtype: z.string().optional(),
   financeable: z.string(),
-  bedroom: z.string().refine((val) => parseInt(val) > 0, {
+  bedroom: z.string().refine((val) => parseInt(val) >= 0, {
     message: 'O número de quartos é obrigatório',
   }),
-  bathroom: z.string().refine((val) => parseInt(val) > 0, {
+  bathroom: z.string().refine((val) => parseInt(val) >= 0, {
     message: 'O número de banheiros é obrigatório',
   }),
-  total_area: z.string().refine((val) => parseInt(val) > 0, {
-    message: 'A área total é obrigatória',
-  }),
+  total_area: z.string().optional(),
   useful_area: z.string().optional(),
   parking_spaces: z.string().refine((val) => parseInt(val) >= 0, {
     message: 'O número de vagas de estacionamento é obrigatório',

@@ -154,11 +154,11 @@ function NovoAnuncio() {
       bathroom: parseInt(data.bathroom),
       parking_spaces: parseInt(data.parking_spaces),
       useful_area: data.useful_area ? parseInt(data.useful_area) : null,
-      total_area: parseInt(data.total_area),
+      total_area: data?.total_area ? parseInt(data.total_area) : null,
       condon_price: data.condon_price ? parseInt(data.condon_price) : null,
       iptu: data.iptu ? parseInt(data.iptu) : null,
       realtorId: parseInt(data.realtorId),
-      price: parseInt(data.price.replace(/\./g, ""), 10),
+      price: parseInt(data.price.replace(/\./g, ''), 10),
       address: propertyAddress,
       Property_type:
         PropertyType[data.Property_type as keyof typeof PropertyType],
@@ -210,7 +210,7 @@ function NovoAnuncio() {
         setMainImage(null);
       }
 
-      const formattedPublicId = publicId.slice(publicId.indexOf('/') + 1);
+      const formattedPublicId = publicId.split('/')[2].split('.')[0];
 
       const { data } = await api.delete(`upload/${formattedPublicId}`);
 
@@ -218,7 +218,7 @@ function NovoAnuncio() {
         (image) => image.publicId !== publicId
       );
 
-      setTemporaryImages((prev) => [...prev, ...newImages]);
+      setTemporaryImages(newImages);
 
       toaster({
         title: 'Sucesso!',
@@ -461,7 +461,7 @@ function NovoAnuncio() {
               {errors.bathroom && errors.bathroom.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl isRequired isInvalid={!!errors.total_area}>
+          <FormControl isInvalid={!!errors.total_area}>
             <FormLabel>Área Total (m²)</FormLabel>
             <DefaultTextInput register={{ ...register('total_area') }} />
             <FormErrorMessage>

@@ -111,7 +111,7 @@ function NovoAnuncio() {
   };
 
   const getPropertyData = async () => {
-    try {      
+    try {
       const { data } = await api.get(`/properties/${id}`);
 
       setValue('title', data.title);
@@ -120,7 +120,7 @@ function NovoAnuncio() {
         'Property_type',
         PropertyType[data.Property_type as keyof typeof PropertyType].toString()
       );
-      if(data?.Property_subtype){
+      if (data?.Property_subtype) {
         setValue(
           'Property_subtype',
           PropertySubtype[
@@ -131,29 +131,58 @@ function NovoAnuncio() {
       setValue('bedroom', data.bedroom.toString());
       setValue('bathroom', data.bathroom.toString());
       setValue('total_area', data.total_area.toString());
-      setValue('useful_area', data.useful_area ? data.useful_area.toString() : '');
+      setValue(
+        'useful_area',
+        data.useful_area ? data.useful_area.toString() : ''
+      );
       setValue('parking_spaces', data.parking_spaces.toString());
-      setValue('condon_price', data.condon_price ? data.condon_price.toString() : '');
+      setValue(
+        'condon_price',
+        data.condon_price ? data.condon_price.toString() : ''
+      );
       setValue('iptu', data.iptu ? data.iptu.toString() : '');
       setValue('financeable', data.financeable.toString());
       setValue('price', data.price.toString());
       setValue('address', data.address?.cep.toString());
       setPropertyAddress(data.address);
-      setValue('realtorId', data.realtorId.toString());
+      setValue('realtorId', data.Realtor.id.toString());
 
-      setValue('property_features.serviceArea', data.property_features.serviceArea);
-      setValue('property_features.bedroomClosets', data.property_features.bedroomClosets);
-      setValue('property_features.kitchenCabinets', data.property_features.kitchenCabinets);
+      setValue(
+        'property_features.serviceArea',
+        data.property_features.serviceArea
+      );
+      setValue(
+        'property_features.bedroomClosets',
+        data.property_features.bedroomClosets
+      );
+      setValue(
+        'property_features.kitchenCabinets',
+        data.property_features.kitchenCabinets
+      );
       setValue('property_features.furnished', data.property_features.furnished);
-      setValue('property_features.airConditioning', data.property_features.airConditioning);
-      setValue('property_features.barbecueGrill', data.property_features.barbecueGrill);
+      setValue(
+        'property_features.airConditioning',
+        data.property_features.airConditioning
+      );
+      setValue(
+        'property_features.barbecueGrill',
+        data.property_features.barbecueGrill
+      );
       setValue('property_features.balcony', data.property_features.balcony);
       setValue('property_features.gym', data.property_features.gym);
-      setValue('property_features.swimmingPool', data.property_features.swimmingPool);
-      setValue('property_features.serviceRoom', data.property_features.serviceRoom);
+      setValue(
+        'property_features.swimmingPool',
+        data.property_features.swimmingPool
+      );
+      setValue(
+        'property_features.serviceRoom',
+        data.property_features.serviceRoom
+      );
 
-
-      setValue('condo_features.gatedCommunity', data.condo_features.gatedCommunity);
+      setValue(
+        'condo_features.gatedCommunity',
+        data.condo_features.gatedCommunity
+      );
       setValue('condo_features.elevator', data.condo_features.elevator);
       setValue('condo_features.security24h', data.condo_features.security24h);
       setValue('condo_features.concierge', data.condo_features.concierge);
@@ -161,7 +190,6 @@ function NovoAnuncio() {
       setValue('condo_features.gym', data.condo_features.gym);
       setValue('condo_features.swimmingPool', data.condo_features.swimmingPool);
       setValue('condo_features.partyHall', data.condo_features.partyHall);
-
 
       setTemporaryImages(
         data.images.map((image: any) => ({
@@ -220,7 +248,7 @@ function NovoAnuncio() {
 
   const onSubmit: SubmitHandler<TypeFormData> = (data) => {
     console.log(data);
-    
+
     const formattedData = {
       ...data,
       images: temporaryImages.map((image) => image.url),
@@ -230,7 +258,7 @@ function NovoAnuncio() {
       bathroom: parseInt(data.bathroom),
       parking_spaces: parseInt(data.parking_spaces),
       useful_area: data.useful_area ? parseInt(data.useful_area) : null,
-      total_area: parseInt(data.total_area),
+      total_area: data?.total_area ? parseInt(data.total_area) : null,
       condon_price: data.condon_price ? parseInt(data.condon_price) : null,
       iptu: data.iptu ? parseInt(data.iptu) : null,
       realtorId: parseInt(data.realtorId),
@@ -286,7 +314,7 @@ function NovoAnuncio() {
         setMainImage(null);
       }
 
-      const formattedPublicId = publicId.slice(publicId.indexOf('/') + 1);
+      const formattedPublicId = publicId.split('/')[2].split('.')[0];
 
       const { data } = await api.delete(`upload/${formattedPublicId}`);
 
@@ -294,7 +322,7 @@ function NovoAnuncio() {
         (image) => image.publicId !== publicId
       );
 
-      setTemporaryImages((prev) => [...prev, ...newImages]);
+      setTemporaryImages(newImages);
 
       toaster({
         title: 'Sucesso!',
@@ -543,7 +571,7 @@ function NovoAnuncio() {
               {errors.bathroom && errors.bathroom.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl isRequired isInvalid={!!errors.total_area}>
+          <FormControl isInvalid={!!errors.total_area}>
             <FormLabel>Área Total (m²)</FormLabel>
             <DefaultTextInput register={{ ...register('total_area') }} />
             <FormErrorMessage>

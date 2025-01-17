@@ -173,15 +173,17 @@ function ImovelView() {
                         </div>
                       </span>
                     )}
-                    <span className="flex items-center gap-2 text-nowrap">
-                      <IconFrame icon={<FaRulerCombined size={iconSize} />} />
-                      <div className="flex flex-col justify-center items-center">
-                        <span className="text-zinc-600 font-medium text-xs">
-                          {property?.total_area} m²
-                        </span>
-                        <span className="text-xs">Área Total</span>
-                      </div>
-                    </span>
+                    {property?.total_area && (
+                      <span className="flex items-center gap-2 text-nowrap">
+                        <IconFrame icon={<FaRulerCombined size={iconSize} />} />
+                        <div className="flex flex-col justify-center items-center">
+                          <span className="text-zinc-600 font-medium text-xs">
+                            {property?.total_area} m²
+                          </span>
+                          <span className="text-xs">Área Total</span>
+                        </div>
+                      </span>
+                    )}
                   </SimpleGrid>
                 </div>
               </div>

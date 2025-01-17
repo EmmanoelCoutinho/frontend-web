@@ -17,7 +17,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
   return (
     <div
       onClick={() => redirect(propertyDetails.id)}
-      className="flex flex-col h-[800px]  w-full max-w-[370px] m-auto rounded-lg overflow-hidden shadow-lg text-zinc-600 relative cursor-pointer"
+      className="flex flex-col h-[720px]  w-full max-w-[370px] m-auto rounded-lg overflow-hidden shadow-lg text-zinc-600 relative cursor-pointer"
     >
       <span className="flex justify-center items-center absolute top-4 left-4 w-[100px] h-[30px] bg-orange-600 text-white font-medium rounded-md z-50">
         Cód: {propertyDetails.id}
@@ -89,18 +89,20 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
                 </div>
               </span>
             )}
-            <span className="flex items-center gap-2 text-nowrap">
-              <IconFrame icon={<FaBed size={iconSize} />} />
-              <div className="flex flex-col justify-center items-center">
-                <span className="text-zinc-600 font-medium text-xs">
-                  {propertyDetails?.total_area} m²
-                </span>
-                <span className="text-xs">Área Total</span>
-              </div>
-            </span>
+            {propertyDetails.total_area ? (
+              <span className="flex items-center gap-2 text-nowrap">
+                <IconFrame icon={<FaBed size={iconSize} />} />
+                <div className="flex flex-col justify-center items-center">
+                  <span className="text-zinc-600 font-medium text-xs">
+                    {propertyDetails?.total_area} m²
+                  </span>
+                  <span className="text-xs">Área Total</span>
+                </div>
+              </span>
+            ) : <span className="h-9" ></span>}
           </SimpleGrid>
         </div>
-        <div className="flex flex-col pt-20">
+        <div className="flex flex-col pt-6">
           <span>Valor</span>
           <span className="text-zinc-600 font-medium text-2xl">
             R$ {priceMask(propertyDetails?.price.toString())}

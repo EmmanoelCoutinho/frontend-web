@@ -1,10 +1,6 @@
 import CardProperties from '@/components/cardProperties';
-import DefaultSelect from '@/components/deafultSelect';
-import { Checkbox, SimpleGrid, useDisclosure } from '@chakra-ui/react';
-import { TbHomeDollar } from 'react-icons/tb';
+import { SimpleGrid, useDisclosure } from '@chakra-ui/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import DefaultButton from '@/components/defaultButton';
-import DefaultTextInput from '@/components/defaultTextInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   defaultFiltersSchema,
@@ -13,13 +9,14 @@ import {
 import { IoFilterSharp } from 'react-icons/io5';
 import { priceMask } from '@/utils/priceMask';
 import PageHeader from '@/components/pageHeader';
-import FilterDrawer from '@/components/filtersDrawer';
 import { useEffect, useState } from 'react';
 import { api } from '@/services/axios';
 import { Property } from '@/types/propertiesType';
+import LoadingModal from '@/components/loadingModal';
 
 function Imoveis() {
   const [properties, setProperties] = useState<Property[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const {
     register,
@@ -49,10 +46,17 @@ function Imoveis() {
 
   useEffect(() => {
     const getAllProperties = async () => {
-      const response = await api.get('properties');
-      const data = response.data;
+      setIsLoading(true);
+      try {
+        const response = await api.get('properties');
+        const data = response.data;
 
-      setProperties(data);
+        setProperties(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     getAllProperties();
@@ -133,21 +137,20 @@ function Imoveis() {
           >
             <IoFilterSharp size={28} />
           </span>
-          <div className="flex flex-col w-full h-full max-h-[1000px] overflow-y-scroll px-4">
-            <SimpleGrid
-              className="w-full"
-              columns={{ sm: 1, md: 1, lg: 2, xl: 3 }}
-              spacingY={10}
-              spacingX={3}
-            >
-              {properties?.map((item, index) => (
-                <CardProperties key={index} propertyDetails={item} />
-              ))}
-            </SimpleGrid>
-          </div>
+          <SimpleGrid
+            className="w-full"
+            columns={{ sm: 1, md: 1, lg: 2, xl: 3 }}
+            spacingY={10}
+            spacingX={3}
+          >
+            {properties?.map((item, index) => (
+              <CardProperties key={index} propertyDetails={item} />
+            ))}
+          </SimpleGrid>
         </div>
       </div>
-      <FilterDrawer isOpen={isOpen} onClose={onClose} />
+      {/* <FilterDrawer isOpen={isOpen} onClose={onClose} /> */}
+      <LoadingModal isLoading={isLoading} />
     </>
   );
 }

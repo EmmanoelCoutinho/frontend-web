@@ -11,7 +11,7 @@ function Layout({ children }: { children: any }) {
     <div className="flex flex-col min-h-screen min-w-screen">
       {!isAdminPage && <Header startsWithAdmin={startsWithAdmin} />}
       <div
-        className={`flex-grow h-full w-full ${
+        className={`flex-grow h-full w-full over ${
           !isAdminPage && 'pb-16'
         } bg-[#FBFBFA]`}
       >

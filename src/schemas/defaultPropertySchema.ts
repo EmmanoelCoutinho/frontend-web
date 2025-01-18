@@ -21,7 +21,7 @@ export const defaultProperySchema = z.object({
   parking_spaces: z.string().refine((val) => parseInt(val) >= 0, {
     message: 'O número de vagas de estacionamento é obrigatório',
   }),
-  videotour_url: z.string().optional(),
+  videotour_url: z.string().optional().nullable(),
   address: z.string().nonempty({ message: 'O CEP é obrigatório' }),
   realtorId: z
     .string()

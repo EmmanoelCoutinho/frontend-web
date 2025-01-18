@@ -146,6 +146,7 @@ function NovoAnuncio() {
       setValue('address', data.address?.cep.toString());
       setPropertyAddress(data.address);
       setValue('realtorId', data.Realtor.id.toString());
+      setValue('videotour_url', data.videotour_url);
 
       setValue(
         'property_features.serviceArea',
@@ -247,8 +248,6 @@ function NovoAnuncio() {
   };
 
   const onSubmit: SubmitHandler<TypeFormData> = (data) => {
-    console.log(data);
-
     const formattedData = {
       ...data,
       images: temporaryImages.map((image) => image.url),
@@ -263,6 +262,7 @@ function NovoAnuncio() {
       iptu: data.iptu ? parseInt(data.iptu) : null,
       realtorId: parseInt(data.realtorId),
       price: parseInt(data.price.replace(/\./g, ''), 10),
+      videotour_url: data?.videotour_url ? data?.videotour_url : null,
       address: propertyAddress,
       Property_type:
         PropertyType[data.Property_type as keyof typeof PropertyType],
@@ -752,6 +752,13 @@ function NovoAnuncio() {
 
           {/* end image upload contariner */}
 
+          <FormControl isInvalid={!!errors.videotour_url}>
+            <FormLabel>URL Tour virtual</FormLabel>
+            <DefaultTextInput register={{ ...register('videotour_url') }} />
+            <FormErrorMessage>
+              {errors.videotour_url && errors.videotour_url.message}
+            </FormErrorMessage>
+          </FormControl>
           <FormControl isRequired isInvalid={!!errors.price}>
             <FormLabel>Preço (R$)</FormLabel>
             <DefaultTextInput

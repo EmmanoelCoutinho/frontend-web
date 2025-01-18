@@ -130,23 +130,23 @@ function NovoAnuncio() {
       }
       setValue('bedroom', data.bedroom.toString());
       setValue('bathroom', data.bathroom.toString());
-      setValue('total_area', data.total_area.toString());
+      setValue('total_area', data.total_area ? data.total_area.toString() : null);
       setValue(
         'useful_area',
-        data.useful_area ? data.useful_area.toString() : ''
+        data.useful_area ? data.useful_area.toString() : null
       );
       setValue('parking_spaces', data.parking_spaces.toString());
       setValue(
         'condon_price',
-        data.condon_price ? data.condon_price.toString() : ''
+        data.condon_price ? data.condon_price.toString() : null
       );
-      setValue('iptu', data.iptu ? data.iptu.toString() : '');
+      setValue('iptu', data.iptu ? data.iptu.toString() : null);
       setValue('financeable', data.financeable.toString());
-      setValue('price', data.price.toString());
+      setValue('price', priceMask(data.price.toString()));
       setValue('address', data.address?.cep.toString());
       setPropertyAddress(data.address);
       setValue('realtorId', data.Realtor.id.toString());
-      setValue('videotour_url', data.videotour_url);
+      setValue('videotour_url', data.videotour_url ? data.videotour_url : null);
 
       setValue(
         'property_features.serviceArea',
@@ -305,6 +305,8 @@ function NovoAnuncio() {
       });
     }
   };
+
+  console.log(errors)
 
   const handleDeleteImage = async (publicId: string) => {
     try {

@@ -143,7 +143,7 @@ function NovoAnuncio() {
       setValue('iptu', data.iptu ? data.iptu.toString() : null);
       setValue('financeable', data.financeable.toString());
       setValue('price', priceMask(data.price.toString()));
-      setValue('address', data.address?.cep.toString());
+      setValue('address', data.address ? data.address?.cep.toString() : null);
       setPropertyAddress(data.address);
       setValue('realtorId', data.Realtor.id.toString());
       setValue('videotour_url', data.videotour_url ? data.videotour_url : null);

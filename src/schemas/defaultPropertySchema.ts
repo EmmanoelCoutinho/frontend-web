@@ -4,8 +4,8 @@ import * as z from 'zod';
 export const defaultProperySchema = z.object({
   title: z.string().nonempty({ message: 'O título é obrigatório' }),
   price: z.string().nonempty({ message: 'O preço é obrigatório' }),
-  condon_price: z.string().optional(),
-  iptu: z.string().optional(),
+  condon_price: z.string().nullable().optional(),
+  iptu: z.string().nullable().optional(),
   description: z.string().nonempty({ message: 'A descrição é obrigatória' }),
   Property_type: z.string(),
   Property_subtype: z.string().optional(),
@@ -16,8 +16,8 @@ export const defaultProperySchema = z.object({
   bathroom: z.string().refine((val) => parseInt(val) >= 0, {
     message: 'O número de banheiros é obrigatório',
   }),
-  total_area: z.string().optional(),
-  useful_area: z.string().optional(),
+  total_area: z.string().nullable().optional(),
+  useful_area: z.string().nullable().optional(),
   parking_spaces: z.string().refine((val) => parseInt(val) >= 0, {
     message: 'O número de vagas de estacionamento é obrigatório',
   }),

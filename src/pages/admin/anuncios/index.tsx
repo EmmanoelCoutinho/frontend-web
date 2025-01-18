@@ -18,6 +18,7 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
   const router = useRouter();
 
   const [data, setData] = useState<Property[]>(propertiesData);
+  const [filterInput, setFilterInput] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
   const getData = async () => {
@@ -29,7 +30,7 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
     } catch (error) {
       console.error('Error fetching data:', error);
       return null;
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -50,8 +51,59 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
   };
 
   const bodyItens = data?.map((property: Property) => {
-    return { ...property, price: formatPrice(property.price), actions: <Actions reloadFunc={() => getData()} page='anuncios' propertyId={property.id} /> };
+    return {
+      ...property,
+      price: formatPrice(property.price),
+      actions: (
+        <Actions
+          reloadFunc={() => getData()}
+          page="anuncios"
+          propertyId={property.id}
+        />
+      ),
+    };
   });
+
+  const filterData = () => {
+    if (filterInput === '') return bodyItens;
+    return bodyItens.filter((anuncios) => {
+      return (
+        anuncios?.title
+          ?.toLowerCase()
+          ?.normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .includes(
+            filterInput
+              .toLowerCase()
+              ?.normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+          ) ||
+        anuncios?.id
+          ?.toString()
+          ?.toLowerCase()
+          ?.normalize('NFD')
+          ?.replace(/[\u0300-\u036f]/g, '')
+          ?.includes(
+            filterInput
+              ?.toLowerCase()
+              ?.normalize('NFD')
+              ?.replace(/[\u0300-\u036f]/g, '')
+          ) ||
+        anuncios?.Realtor.name
+          .toLowerCase()
+          ?.normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .includes(
+            filterInput
+              .toLowerCase()
+              ?.normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+          )
+      );
+    });
+  };
+
+  console.log(filterInput);
 
   return (
     <AdminLayout title="Dashboard Anúncios">
@@ -63,9 +115,17 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
         />
       </span>
       <span className="flex w-full justify-center items-center">
-        <DefaultTextInput maxWidth={'800px'} placeholder="Pesquisar anúncio" />
+        <DefaultTextInput
+          maxWidth={'800px'}
+          placeholder="Pesquisar anúncio"
+          onChange={(e: any) => setFilterInput(e.target.value)}
+        />
       </span>
-      <CustomTable headItens={headItens} bodyItens={bodyItens} loading={loading} />
+      <CustomTable
+        headItens={headItens}
+        bodyItens={filterData()}
+        loading={loading}
+      />
     </AdminLayout>
   );
 }
@@ -106,5 +166,3 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 };
-
-

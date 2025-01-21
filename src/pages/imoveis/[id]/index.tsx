@@ -137,7 +137,7 @@ function ImovelView() {
                     </span>
                   </span>
                   <SimpleGrid columns={3} className="mt-6">
-                    {property?.bedroom && (
+                    {property?.bedroom !== undefined && property?.bedroom >= 0 && (
                       <span className="flex items-center gap-2">
                         <IconFrame icon={<FaBed size={iconSize} />} />
                         <div className="flex flex-col justify-center items-center">
@@ -148,7 +148,7 @@ function ImovelView() {
                         </div>
                       </span>
                     )}
-                    {property?.bathroom && (
+                    {property?.bathroom !== undefined && property.bathroom >= 0 && (
                       <span className="flex items-center gap-2">
                         <IconFrame icon={<FaShower size={iconSize} />} />
                         <div className="flex flex-col justify-center items-center">
@@ -159,7 +159,7 @@ function ImovelView() {
                         </div>
                       </span>
                     )}
-                    {property?.parking_spaces && (
+                    {property?.parking_spaces !== undefined && property.parking_spaces >= 0 && (
                       <span className="flex items-center gap-2 pl-4">
                         <IconFrame icon={<FaCar size={iconSize} />} />
                         <div className="flex flex-col justify-center items-center">

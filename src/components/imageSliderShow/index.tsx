@@ -70,8 +70,6 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
     }
   }, [currentImage, images.length]);
 
-  console.log(totalImages)
-
   return (
     <>
       <div className="flex w-fit h-fit justify-center gap-2">

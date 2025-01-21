@@ -3,6 +3,7 @@ import IconFrame from '@/components/iconFrame';
 import ImageSliderShow from '@/components/imageSliderShow';
 import LoadingModal from '@/components/loadingModal';
 import PageHeader from '@/components/pageHeader';
+import YouTubePlayer from '@/components/youtubePlayer';
 import { api } from '@/services/axios';
 import { PropertyType } from '@/types/enums/propertyEnum';
 import { Property } from '@/types/propertiesType';
@@ -73,12 +74,21 @@ function ImovelView() {
                 <span className="flex justify-center items-center w-[120px] h-[30px] bg-orange-600 text-white font-medium rounded-md z-50 mb-6">
                   Código: {property?.id}
                 </span>
-                <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
+                <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4 text-lg">
                   Descrição do Imóvel
                 </span>
                 <Box whiteSpace={'pre-wrap'}>{property?.description}</Box>
+                {property?.videotour_url && (
+                  <div className="flex flex-col mt-10">
+                    <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4 text-lg">
+                      Vídeo de apresentação
+                    </span>
+                    <YouTubePlayer videoUrl={property?.videotour_url} />
+                  </div>
+                )}
               </div>
             </div>
+
             <div className="flex flex-col gap-6 w-full h-full max-w-[400px] ">
               <div className="flex flex-col w-full h-full max-h-[300px] bg-gray-200 p-4 rounded-lg gap-2">
                 <span className="flex flex-row justify-between items-center w-full h-[50px] rounded-md bg-zinc-600 text-white px-4 text-xl md:text-base">

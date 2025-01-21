@@ -306,8 +306,6 @@ function NovoAnuncio() {
     }
   };
 
-  console.log(errors)
-
   const handleDeleteImage = async (publicId: string) => {
     try {
       setLoadingDelete(true);

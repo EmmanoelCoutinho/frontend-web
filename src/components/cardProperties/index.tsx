@@ -1,7 +1,13 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Image, SimpleGrid } from "@chakra-ui/react";
 import IconFrame from "../iconFrame";
-import { FaBed, FaCar, FaLocationDot, FaShower } from "react-icons/fa6";
+import {
+  FaBed,
+  FaCar,
+  FaLocationDot,
+  FaShower,
+  FaRulerCombined,
+} from 'react-icons/fa6';
 import { Property } from "@/types/propertiesType";
 import { priceMask } from "@/utils/priceMask";
 import { verifyAndAddPlus } from "@/utils/verifyAndAddPlus";
@@ -80,7 +86,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
           <SimpleGrid columns={3} className="mt-6">
             {propertyDetails.useful_area && (
               <span className="flex items-center gap-2 text-nowrap">
-                <IconFrame icon={<FaBed size={iconSize} />} />
+                <IconFrame icon={<FaRulerCombined size={iconSize} />} />
                 <div className="flex flex-col justify-center items-center">
                   <span className="text-zinc-600 font-medium text-xs">
                     {propertyDetails?.useful_area} m²
@@ -91,7 +97,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
             )}
             {propertyDetails.total_area ? (
               <span className="flex items-center gap-2 text-nowrap">
-                <IconFrame icon={<FaBed size={iconSize} />} />
+                <IconFrame icon={<FaRulerCombined size={iconSize} />} />
                 <div className="flex flex-col justify-center items-center">
                   <span className="text-zinc-600 font-medium text-xs">
                     {propertyDetails?.total_area} m²
@@ -99,7 +105,9 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
                   <span className="text-xs">Área Total</span>
                 </div>
               </span>
-            ) : <span className="h-9" ></span>}
+            ) : (
+              <span className="h-9"></span>
+            )}
           </SimpleGrid>
         </div>
         <div className="flex flex-col pt-6">

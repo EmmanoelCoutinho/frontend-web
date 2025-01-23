@@ -43,6 +43,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { get } from 'http';
 import { extractpublicId } from '@/utils/extractPublicId';
+import { realtorsList } from '@/constants/realtors';
 
 type ImageType = {
   publicId: string;
@@ -90,7 +91,6 @@ function NovoAnuncio() {
 
   const [temporaryImages, setTemporaryImages] = useState<ImageType[]>([]);
   const [mainImage, setMainImage] = useState<CoverImageType | null>(null);
-  const [realtorList, setRealtorList] = useState([]);
   const [propertyAddress, setPropertyAddress] = useState(null);
 
   //loading
@@ -140,9 +140,9 @@ function NovoAnuncio() {
       setValue('parking_spaces', data.parking_spaces.toString());
       setValue(
         'condon_price',
-        data.condon_price ? data.condon_price.toString() : null
+        data.condon_price ? priceMask(data.condon_price.toString()) : null
       );
-      setValue('iptu', data.iptu ? data.iptu.toString() : null);
+      setValue('iptu', data.iptu ? priceMask(data.iptu.toString()) : null);
       setValue('financeable', data.financeable.toString());
       setValue('price', priceMask(data.price.toString()));
       setValue('address', data.address.cep ? data.address?.cep.toString() : null);
@@ -260,8 +260,10 @@ function NovoAnuncio() {
       parking_spaces: parseInt(data.parking_spaces),
       useful_area: data.useful_area ? parseInt(data.useful_area) : null,
       total_area: data?.total_area ? parseInt(data.total_area) : null,
-      condon_price: data.condon_price ? parseInt(data.condon_price) : null,
-      iptu: data.iptu ? parseInt(data.iptu) : null,
+      condon_price: data.condon_price
+        ? parseInt(data.condon_price.replace(/\./g, ''))
+        : null,
+      iptu: data.iptu ? parseInt(data.iptu.replace(/\./g, '')) : null,
       realtorId: parseInt(data.realtorId),
       price: parseInt(data.price.replace(/\./g, ''), 10),
       videotour_url: data?.videotour_url ? data?.videotour_url : null,
@@ -456,29 +458,12 @@ function NovoAnuncio() {
   };
 
   useEffect(() => {
-    const getRealtors = async () => {
-      try {
-        const { data } = await api.get('/realtor/list');
-
-        const formattedRealtors = data.map((realtor: any) => ({
-          title: realtor.name,
-          value: realtor.id,
-        }));
-
-        setRealtorList(formattedRealtors);
-      } catch (error) {
-        console.error('Erro ao buscar corretores:', error);
-      }
-    };
-
-    getRealtors();
-  }, []);
-
-  useEffect(() => {
     if (id) {
       getPropertyData();
     }
   }, [id]);
+
+  console.log(watch('condon_price'))
 
   return (
     <AdminLayout title="Novo Anúncio" infinity>
@@ -489,7 +474,10 @@ function NovoAnuncio() {
         >
           <FormControl isRequired isInvalid={!!errors.title}>
             <FormLabel>Título</FormLabel>
-            <DefaultTextInput maxLength={titleCharLimit} register={{ ...register('title') }} />
+            <DefaultTextInput
+              maxLength={titleCharLimit}
+              register={{ ...register('title') }}
+            />
             <span
               className={`flex justify-end w-full text-xs ${
                 titleText?.length === titleCharLimit && 'text-red-700 text-base'
@@ -796,7 +784,7 @@ function NovoAnuncio() {
             <FormLabel>Corretor Responsável</FormLabel>
             <DefaultSelect
               placeholder="Selecione"
-              options={realtorList}
+              options={realtorsList}
               register={{ ...register('realtorId') }}
             />
             <FormErrorMessage>

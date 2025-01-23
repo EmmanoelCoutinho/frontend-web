@@ -114,6 +114,27 @@ function ImovelView() {
                     )}
                   </span>
                 </span>
+
+                {property?.iptu ||
+                  (property?.condon_price && (
+                    <div className="flex mb-2">
+                      {property?.iptu && (
+                        <span className="flex flex-col w-full justify-between items-start font-medium px-2">
+                          <span>IPTU</span>
+                          <span>R$ {property.iptu.toString()}</span>
+                        </span>
+                      )}
+                      {property?.condon_price && (
+                        <span className="flex flex-col w-full justify-between items-end font-medium px-2">
+                          <span> Condomínio</span>
+                          <span>
+                            R$ {priceMask(property.condon_price.toString())}
+                          </span>
+                        </span>
+                      )}
+                    </div>
+                  ))}
+
                 <span className="flex flex-row justify-around items-center w-full h-[50px]">
                   <DefaultButton
                     onClinkFunc={callRealtor}
@@ -137,39 +158,42 @@ function ImovelView() {
                     </span>
                   </span>
                   <SimpleGrid columns={3} className="mt-6">
-                    {property?.bedroom !== undefined && property?.bedroom >= 0 && (
-                      <span className="flex items-center gap-2">
-                        <IconFrame icon={<FaBed size={iconSize} />} />
-                        <div className="flex flex-col justify-center items-center">
-                          <span className="text-zinc-600 font-medium text-sm">
-                            {verifyAndAddPlus(property?.bedroom)}
-                          </span>
-                          <span className="text-xs">Quarto(s)</span>
-                        </div>
-                      </span>
-                    )}
-                    {property?.bathroom !== undefined && property.bathroom >= 0 && (
-                      <span className="flex items-center gap-2">
-                        <IconFrame icon={<FaShower size={iconSize} />} />
-                        <div className="flex flex-col justify-center items-center">
-                          <span className="text-zinc-600 font-medium text-sm">
-                            {verifyAndAddPlus(property?.bathroom)}
-                          </span>
-                          <span className="text-xs">Banheiro(s)</span>
-                        </div>
-                      </span>
-                    )}
-                    {property?.parking_spaces !== undefined && property.parking_spaces >= 0 && (
-                      <span className="flex items-center gap-2 pl-4">
-                        <IconFrame icon={<FaCar size={iconSize} />} />
-                        <div className="flex flex-col justify-center items-center">
-                          <span className="text-zinc-600 font-medium text-sm">
-                            {verifyAndAddPlus(property?.parking_spaces)}
-                          </span>
-                          <span className="text-xs">Vaga(s)</span>
-                        </div>
-                      </span>
-                    )}
+                    {property?.bedroom !== undefined &&
+                      property?.bedroom >= 0 && (
+                        <span className="flex items-center gap-2">
+                          <IconFrame icon={<FaBed size={iconSize} />} />
+                          <div className="flex flex-col justify-center items-center">
+                            <span className="text-zinc-600 font-medium text-sm">
+                              {verifyAndAddPlus(property?.bedroom)}
+                            </span>
+                            <span className="text-xs">Quarto(s)</span>
+                          </div>
+                        </span>
+                      )}
+                    {property?.bathroom !== undefined &&
+                      property.bathroom >= 0 && (
+                        <span className="flex items-center gap-2">
+                          <IconFrame icon={<FaShower size={iconSize} />} />
+                          <div className="flex flex-col justify-center items-center">
+                            <span className="text-zinc-600 font-medium text-sm">
+                              {verifyAndAddPlus(property?.bathroom)}
+                            </span>
+                            <span className="text-xs">Banheiro(s)</span>
+                          </div>
+                        </span>
+                      )}
+                    {property?.parking_spaces !== undefined &&
+                      property.parking_spaces >= 0 && (
+                        <span className="flex items-center gap-2 pl-4">
+                          <IconFrame icon={<FaCar size={iconSize} />} />
+                          <div className="flex flex-col justify-center items-center">
+                            <span className="text-zinc-600 font-medium text-sm">
+                              {verifyAndAddPlus(property?.parking_spaces)}
+                            </span>
+                            <span className="text-xs">Vaga(s)</span>
+                          </div>
+                        </span>
+                      )}
                   </SimpleGrid>
                   <SimpleGrid columns={3} className="mt-6">
                     {property?.useful_area && (

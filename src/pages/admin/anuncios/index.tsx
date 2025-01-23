@@ -19,10 +19,7 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
 
   const [data, setData] = useState<Property[]>(propertiesData);
   const [filterInput, setFilterInput] = useState<string>('');
-  const [loading, setLoading] = useState(false);
-
-  console.log(propertiesData);
-  
+  const [loading, setLoading] = useState(false);  
 
   const getData = async () => {
     try {

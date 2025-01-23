@@ -80,15 +80,16 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
           } max-h-[520px]`}
           onClick={() => handleOpen(0)}
         />
-        {isLargerThan840 && (totalImages === 2 || totalImages === 3 || totalImages === 4) && (
-          <ImageContainer
-            src={images[1]}
-            sizeClassname={`${
-              isLargerThan840 ? 'max-w-[505px]' : ''
-            } max-h-[520px]`}
-            onClick={() => handleOpen(1)}
-          />
-        )}
+        {isLargerThan840 &&
+          (totalImages === 2 || totalImages === 3 || totalImages === 4) && (
+            <ImageContainer
+              src={images[1]}
+              sizeClassname={`${
+                isLargerThan840 ? 'max-w-[505px]' : ''
+              } max-h-[520px]`}
+              onClick={() => handleOpen(1)}
+            />
+          )}
         {isLargerThan840 && totalImages === 3 && (
           <ImageContainer
             src={images[2]}
@@ -144,6 +145,7 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
                 src={images[4]}
                 sizeClassname={smallSize}
                 onClick={() => handleOpen(4)}
+                showMoreImagesNumbers={extraImagensNumber}
               />
             )}
           </SimpleGrid>

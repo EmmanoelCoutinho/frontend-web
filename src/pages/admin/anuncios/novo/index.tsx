@@ -215,7 +215,7 @@ function NovoAnuncio() {
         setMainImage(null);
       }
 
-      const formattedPublicId = publicId.split('/')[2].split('.')[0];
+      const formattedPublicId = publicId.split('/')[2];
 
       const { data } = await api.delete(`upload/${formattedPublicId}`);
 

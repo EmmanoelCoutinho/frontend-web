@@ -204,8 +204,6 @@ function NovoAnuncio() {
         publicId: extractpublicId(data?.images[data.ad_image_cover]),
         index: data.ad_image_cover,
       });
-
-      console.log(data);
     } catch (error) {
       console.error('Erro ao buscar propriedades:', error);
     }
@@ -318,7 +316,7 @@ function NovoAnuncio() {
         setMainImage(null);
       }
 
-      const formattedPublicId = publicId.split('/')[2].split('.')[0];
+      const formattedPublicId = publicId.split('/')[2];
 
       const { data } = await api.delete(`upload/${formattedPublicId}`);
 
@@ -462,8 +460,6 @@ function NovoAnuncio() {
       getPropertyData();
     }
   }, [id]);
-
-  console.log(watch('condon_price'))
 
   return (
     <AdminLayout title="Novo Anúncio" infinity>

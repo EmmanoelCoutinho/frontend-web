@@ -21,6 +21,9 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
   const [filterInput, setFilterInput] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
+  console.log(propertiesData);
+  
+
   const getData = async () => {
     try {
       setLoading(true);
@@ -47,12 +50,15 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
     title: 'Título',
     price: 'Preço',
     'Realtor.name': 'Corretor',
+    views: 'Visualizações',
+    createdAt: 'Data de criação',
     actions: 'Ações',
   };
 
   const bodyItens = data?.map((property: Property) => {
     return {
       ...property,
+      createdAt: new Date(property.createdAt).toLocaleDateString('pt-BR'),
       price: formatPrice(property.price),
       actions: (
         <Actions
@@ -103,8 +109,6 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
     });
   };
 
-  console.log(filterInput);
-
   return (
     <AdminLayout title="Dashboard Anúncios">
       <span className="absolute right-10">
@@ -123,7 +127,13 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
       </span>
       <CustomTable
         headItens={headItens}
-        bodyItens={filterData()}
+        bodyItens={filterData().sort((a, b) => {
+          if (a.views < b.views) {
+            return 1;
+          } else {
+            return -1;
+          }
+        })}
         loading={loading}
       />
     </AdminLayout>

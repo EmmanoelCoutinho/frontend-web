@@ -85,6 +85,8 @@ export interface Property {
   property_features: PropertyFeatures;
   condo_features: CondoFeatures;
   Realtor: Realtor;
+  views: number;
+  createdAt: string;
   address: {
     bairro: string;
     cep: string;

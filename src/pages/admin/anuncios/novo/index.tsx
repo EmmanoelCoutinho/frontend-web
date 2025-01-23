@@ -77,6 +77,7 @@ const defaultCondoFeatures = {
 };
 
 const messageCharLimit = 600;
+const titleCharLimit = 60;
 
 function NovoAnuncio() {
   const toaster = useToast();
@@ -100,6 +101,7 @@ function NovoAnuncio() {
     formState: { errors },
   } = useForm<TypeFormData>({ resolver: zodResolver(defaultProperySchema) });
   const message = watch('description');
+  const titleText = watch('title');
 
   const handleButtonClick = () => {
     // @ts-ignore
@@ -378,7 +380,14 @@ function NovoAnuncio() {
         >
           <FormControl isRequired isInvalid={!!errors.title}>
             <FormLabel>Título</FormLabel>
-            <DefaultTextInput register={{ ...register('title') }} />
+            <DefaultTextInput maxLength={titleCharLimit} register={{ ...register('title') }} />
+            <span
+              className={`flex justify-end w-full text-xs ${
+                titleText?.length === titleCharLimit && 'text-red-700 text-base'
+              }`}
+            >
+              {titleText?.length ?? 0}/{titleCharLimit}
+            </span>
             <FormErrorMessage>
               {errors.title && errors.title.message}
             </FormErrorMessage>

@@ -131,12 +131,12 @@ function Imoveis() {
               </div>
             </form>
           </div> */}
-          <span
+          {/* <span
             onClick={onOpen}
             className="fixed bottom-6 right-6 z-10 flex justify-center items-center font-medium text-white bg-orange-600 w-14 h-14 rounded-full md:hidden"
           >
             <IoFilterSharp size={28} />
-          </span>
+          </span> */}
           <SimpleGrid
             className="w-full"
             columns={{ sm: 1, md: 1, lg: 2, xl: 3 }}

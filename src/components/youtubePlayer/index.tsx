@@ -13,7 +13,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoUrl }) => {
   });
 
   const height = isLargerThan840 ? '400' : '200';
-  const width = isLargerThan840 ? '640' : '380';
+  const width = isLargerThan840 ? '640' : '340';
 
   const isShortUrl = videoUrl.includes('shorts');
 

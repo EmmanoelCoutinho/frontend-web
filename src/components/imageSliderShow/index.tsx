@@ -32,6 +32,9 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
   const [thumbnailPosition, setThumbnailPosition] = useState<number>(-3);
   const thumbnailContainerRef = useRef<HTMLDivElement>(null);
 
+  const [scale, setScale] = useState<number>(1);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const handleChangeImage = (index: number) => {
     setCurrentImage(index);
   };
@@ -74,6 +77,27 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
       }
     }
   }, [currentImage, images.length]);
+
+  const handleGestureStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (event.touches.length === 2) {
+      event.preventDefault();
+    }
+  };
+
+  const handleGestureMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (event.touches.length === 2) {
+      const distance =
+        Math.hypot(
+          event.touches[0].pageX - event.touches[1].pageX,
+          event.touches[0].pageY - event.touches[1].pageY
+        ) / 200; // Adjust scaling factor
+      setScale(Math.min(Math.max(1, distance), 3)); // Limit zoom between 1x and 3x
+    }
+  };
+
+  const handleGestureEnd = () => {
+    setScale(1); // Reset zoom on gesture end
+  };
 
   return (
     <>
@@ -175,39 +199,26 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
                 >
                   <FaChevronLeft />
                 </Button>
-                <div className="w-full max-h-[500px] max-w-[500px] overflow-hidden">
-                  <div
+                <div
+                  ref={containerRef}
+                  onTouchStart={handleGestureStart}
+                  onTouchMove={handleGestureMove}
+                  onTouchEnd={handleGestureEnd}
+                  style={{
+                    transform: `scale(${scale})`,
+                    transition: 'transform 0.2s ease-out',
+                  }}
+                  className="w-full max-h-[500px] max-w-[500px] overflow-hidden"
+                >
+                  <Image
+                    src={images[currentImage]}
                     style={{
-                      display: 'flex',
-                      height: 500,
-                      width: '100%',
-                      transform: `translateX(-${currentImage * 100}%)`,
-                      transition: 'transform 0.3s ease',
+                      objectFit: 'contain',
                     }}
-                  >
-                    {images.map((image, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          minWidth: '100%',
-                          height: '100%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Image
-                          src={image}
-                          style={{
-                            objectFit: 'contain',
-                          }}
-                          width={'100%'}
-                          height={'100%'}
-                          alt={`Imagem do imóvel #${index}`}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                    width={'100%'}
+                    height={'100%'}
+                    alt={`Imagem do imóvel #${currentImage}`}
+                  />
                 </div>
                 <Button
                   onClick={handleNext}
@@ -215,51 +226,6 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
                 >
                   <FaChevronRight />
                 </Button>
-              </div>
-              <div
-                className="relative flex items-center h-full max-h-[120px] overflow-hidden"
-                style={{ width: '100%' }}
-              >
-                <div
-                  ref={thumbnailContainerRef}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    position: 'absolute',
-                    left: '50%',
-                    transform: `translateX(${thumbnailPosition}%)`,
-                    transition: 'transform 0.3s ease-in-out',
-                  }}
-                >
-                  {images?.map((image, index) => {
-                    const selectedItem = index === currentImage;
-
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => handleChangeImage(index)}
-                        className={`transition-transform duration-300 ease-in-out ${
-                          selectedItem
-                            ? 'h-[100px] w-[100px] scale-110'
-                            : 'h-[80px] w-[80px]'
-                        } rounded-lg overflow-hidden cursor-pointer`}
-                        style={{
-                          marginRight: '8px', // Gap between thumbnails
-                        }}
-                      >
-                        <Image
-                          src={image}
-                          style={{
-                            objectFit: 'fill',
-                          }}
-                          width={'100%'}
-                          height={'100%'}
-                          alt="Imóvel a venda"
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
             </div>
           </ModalBody>

@@ -10,9 +10,10 @@ import {
   useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
-import ImageContainer from '../imageContainer';
 import { useEffect, useRef, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useSwipeable } from 'react-swipeable';
+import ImageContainer from '../imageContainer';
 
 const smallSize = 'max-h-[252px] min-h-[252px] max-w-[252px]';
 
@@ -57,6 +58,11 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
     );
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleNext,
+    onSwipedRight: handlePrev,
+  });
+
   useEffect(() => {
     if (thumbnailContainerRef.current) {
       const thumbnails = thumbnailContainerRef.current;
@@ -64,7 +70,6 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
 
       if (activeThumbnail) {
         const newThumbnailPosition = -3 - currentImage * 6;
-
         setThumbnailPosition(newThumbnailPosition);
       }
     }
@@ -160,10 +165,13 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
               {currentImage + 1}/{totalImages}
             </span>
             <div className="flex flex-col h-[96vh] w-full my-auto">
-              <div className="flex h-full w-full justify-between items-center my-auto">
+              <div
+                {...swipeHandlers}
+                className="flex h-full w-full justify-between items-center my-auto"
+              >
                 <Button
                   onClick={handlePrev}
-                  className="flex justify-center items-center rounded-full w-12 h-12 hover:bg-orange-600 hover:text-white"
+                  className="hidden justify-center items-center rounded-full w-12 h-12 hover:bg-orange-600 hover:text-white md:flex"
                 >
                   <FaChevronLeft />
                 </Button>
@@ -203,7 +211,7 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
                 </div>
                 <Button
                   onClick={handleNext}
-                  className="flex justify-center items-center rounded-full w-12 h-12 hover:bg-orange-600 hover:text-white"
+                  className="hidden justify-center items-center rounded-full w-12 h-12 hover:bg-orange-600 hover:text-white md:flex"
                 >
                   <FaChevronRight />
                 </Button>

@@ -16,6 +16,7 @@ import { useSwipeable } from 'react-swipeable';
 import ImageContainer from '../imageContainer';
 
 const smallSize = 'max-h-[252px] min-h-[252px] max-w-[252px]';
+const space = 89;
 
 interface IImageSliderShow {
   images: string[];
@@ -29,6 +30,7 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [currentImage, setCurrentImage] = useState<number>(0);
+  const [currentPosition, setCurrentPosition] = useState<number>(0)
   const [thumbnailPosition, setThumbnailPosition] = useState<number>(-3);
   const thumbnailContainerRef = useRef<HTMLDivElement>(null);
 
@@ -41,11 +43,13 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
 
   const handleOpen = (index: number) => {
     setCurrentImage(index);
+    setCurrentPosition(index * space)
     onOpen();
   };
 
   const handleClose = () => {
     setThumbnailPosition(-3);
+    setCurrentPosition(0);
     onClose();
   };
 
@@ -53,13 +57,22 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
     setCurrentImage((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
+
+    setCurrentPosition((prevState) =>
+      prevState === 0 ? (images.length - 1) * space : prevState - space
+    );
   };
 
   const handleNext = () => {
     setCurrentImage((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
+
+    setCurrentPosition((prevState) =>
+      prevState === (images.length - 1) * space ? 0 : prevState + space
+    );
   };
+
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: handleNext,
@@ -98,6 +111,22 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
   const handleGestureEnd = () => {
     setScale(1); // Reset zoom on gesture end
   };
+
+ useEffect(() => {
+   const handleKeyDown = (event: KeyboardEvent) => {
+     if (event.key === 'ArrowLeft') {
+       handlePrev();
+     } else if (event.key === 'ArrowRight') {
+       handleNext();
+     }
+   };
+
+   window.addEventListener('keydown', handleKeyDown);
+   return () => {
+     window.removeEventListener('keydown', handleKeyDown);
+   };
+ }, []);
+
 
   return (
     <>
@@ -180,7 +209,12 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
           </SimpleGrid>
         )}
       </div>
-      <Modal onClose={handleClose} size={'full'} isOpen={isOpen}>
+      <Modal
+        onClose={handleClose}
+        size={'full'}
+        isOpen={isOpen}
+        scrollBehavior="inside"
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
@@ -188,7 +222,7 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
             <span className="absolute top-4 left-10 text-lg">
               {currentImage + 1}/{totalImages}
             </span>
-            <div className="flex flex-col h-[96vh] w-full my-auto">
+            <div className="flex flex-col h-[96vh] w-full my-auto md:h-[80vh]">
               <div
                 {...swipeHandlers}
                 className="flex h-full w-full justify-between items-center my-auto"
@@ -208,7 +242,7 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
                     transform: `scale(${scale})`,
                     transition: 'transform 0.2s ease-out',
                   }}
-                  className="w-full max-h-[500px] max-w-[500px] overflow-hidden"
+                  className="w-full max-h-[500px] max-w-[500px] bg-blue-500 overflow-hidden"
                 >
                   <Image
                     src={images[currentImage]}
@@ -226,6 +260,55 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
                 >
                   <FaChevronRight />
                 </Button>
+              </div>
+            </div>
+
+            <div className="hidden h-full w-full justify-center overflow-hidden md:flex">
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 40,
+                  left: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 'fit-content',
+                  height: 'fit-content',
+                  padding: '10px 10px',
+                  transform: `translateX(-${currentPosition}px)`,
+                  transition: 'transform 0.3s ease',
+                  overflow: 'hidden',
+                }}
+              >
+                <span className="flex w-full items-center">
+                  {images?.map((image, index) => {
+                    const selectedItem = index === currentImage;
+                    return (
+                      <div
+                        key={index}
+                        onClick={() => handleChangeImage(index)}
+                        className={`transition-transform duration-300 ease-in-out ${
+                          selectedItem
+                            ? 'h-[100px] w-[100px]S'
+                            : 'h-[80px] w-[80px]'
+                        } rounded-lg overflow-hidden cursor-pointer`}
+                        style={{
+                          marginRight: '12px', // Gap between thumbnails
+                        }}
+                      >
+                        <Image
+                          src={image}
+                          style={{
+                            objectFit: 'fill',
+                          }}
+                          width={'100%'}
+                          height={'100%'}
+                          alt="Imóvel a venda"
+                        />
+                      </div>
+                    );
+                  })}
+                </span>
               </div>
             </div>
           </ModalBody>

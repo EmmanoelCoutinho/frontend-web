@@ -112,20 +112,20 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
     setScale(1); // Reset zoom on gesture end
   };
 
- useEffect(() => {
-   const handleKeyDown = (event: KeyboardEvent) => {
-     if (event.key === 'ArrowLeft') {
-       handlePrev();
-     } else if (event.key === 'ArrowRight') {
-       handleNext();
-     }
-   };
+//  useEffect(() => {
+//    const handleKeyDown = (event: KeyboardEvent) => {
+//      if (event.key === 'ArrowLeft') {
+//        handlePrev();
+//      } else if (event.key === 'ArrowRight') {
+//        handleNext();
+//      }
+//    };
 
-   window.addEventListener('keydown', handleKeyDown);
-   return () => {
-     window.removeEventListener('keydown', handleKeyDown);
-   };
- }, []);
+//    window.addEventListener('keydown', handleKeyDown);
+//    return () => {
+//      window.removeEventListener('keydown', handleKeyDown);
+//    };
+//  }, []);
 
 
   return (
@@ -242,7 +242,7 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
                     transform: `scale(${scale})`,
                     transition: 'transform 0.2s ease-out',
                   }}
-                  className="w-full max-h-[500px] max-w-[500px] bg-blue-500 overflow-hidden"
+                  className="w-full max-h-[500px] max-w-[500px] overflow-hidden"
                 >
                   <Image
                     src={images[currentImage]}

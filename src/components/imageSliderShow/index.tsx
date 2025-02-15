@@ -24,6 +24,8 @@ interface IImageSliderShow {
 }
 
 function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
+  const modalBodyRef = useRef<HTMLDivElement>(null);
+
   const [isLargerThan840] = useMediaQuery('(min-width: 840px)');
   const extraImagensNumber = totalImages - 5;
 
@@ -45,6 +47,10 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
     setCurrentImage(index);
     setCurrentPosition(index * space)
     onOpen();
+
+    setTimeout(() => {
+      modalBodyRef.current?.focus();
+    }, 100);
   };
 
   const handleClose = () => {
@@ -111,22 +117,6 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
   const handleGestureEnd = () => {
     setScale(1); // Reset zoom on gesture end
   };
-
-//  useEffect(() => {
-//    const handleKeyDown = (event: KeyboardEvent) => {
-//      if (event.key === 'ArrowLeft') {
-//        handlePrev();
-//      } else if (event.key === 'ArrowRight') {
-//        handleNext();
-//      }
-//    };
-
-//    window.addEventListener('keydown', handleKeyDown);
-//    return () => {
-//      window.removeEventListener('keydown', handleKeyDown);
-//    };
-//  }, []);
-
 
   return (
     <>
@@ -218,7 +208,17 @@ function ImageSliderShow({ images, totalImages }: IImageSliderShow) {
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody
+            ref={modalBodyRef}
+            tabIndex={-1}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowLeft') {
+                handlePrev();
+              } else if (event.key === 'ArrowRight') {
+                handleNext();
+              }
+            }}
+          >
             <span className="absolute top-4 left-10 text-lg">
               {currentImage + 1}/{totalImages}
             </span>

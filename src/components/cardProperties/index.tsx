@@ -89,7 +89,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
                 <IconFrame icon={<FaRulerCombined size={iconSize} />} />
                 <div className="flex flex-col justify-center items-center">
                   <span className="text-zinc-600 font-medium text-xs">
-                    {propertyDetails?.useful_area} m²
+                    {priceMask(propertyDetails?.useful_area?.toString())} m²
                   </span>
                   <span className="text-xs">Área Util</span>
                 </div>
@@ -100,7 +100,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
                 <IconFrame icon={<FaRulerCombined size={iconSize} />} />
                 <div className="flex flex-col justify-center items-center">
                   <span className="text-zinc-600 font-medium text-xs">
-                    {propertyDetails?.total_area} m²
+                    {priceMask(propertyDetails?.total_area?.toString())} m²
                   </span>
                   <span className="text-xs">Área Total</span>
                 </div>

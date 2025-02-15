@@ -302,9 +302,9 @@ function NovoAnuncio() {
     );
   };
 
-  const handleMonetaryInputChange = (
+  const handleFormatThousands = (
     event: React.ChangeEvent<HTMLInputElement>,
-    field: 'price' | 'condon_price' | 'iptu'
+    field: 'price' | 'condon_price' | 'iptu' | 'useful_area' | 'total_area'
   ) => {
     const input = event.target.value.replace(/\D/g, '');
     const formattedPrice = priceMask(input);
@@ -459,14 +459,24 @@ function NovoAnuncio() {
           </FormControl>
           <FormControl isInvalid={!!errors.total_area}>
             <FormLabel>Área Total (m²)</FormLabel>
-            <DefaultTextInput register={{ ...register('total_area') }} />
+            <DefaultTextInput
+              register={{ ...register('total_area') }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleFormatThousands(e, 'total_area')
+              }
+            />
             <FormErrorMessage>
               {errors.total_area && errors.total_area.message}
             </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={!!errors.useful_area}>
             <FormLabel>Área Útil (m²)</FormLabel>
-            <DefaultTextInput register={{ ...register('useful_area') }} />
+            <DefaultTextInput
+              register={{ ...register('useful_area') }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleFormatThousands(e, 'useful_area')
+              }
+            />
             <FormErrorMessage>
               {errors.useful_area && errors.useful_area.message}
             </FormErrorMessage>
@@ -487,7 +497,7 @@ function NovoAnuncio() {
             <DefaultTextInput
               register={{ ...register('condon_price') }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleMonetaryInputChange(e, 'condon_price')
+                handleFormatThousands(e, 'condon_price')
               }
             />
             <FormErrorMessage>
@@ -499,7 +509,7 @@ function NovoAnuncio() {
             <DefaultTextInput
               register={{ ...register('iptu') }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleMonetaryInputChange(e, 'iptu')
+                handleFormatThousands(e, 'iptu')
               }
             />
             <FormErrorMessage>
@@ -640,7 +650,7 @@ function NovoAnuncio() {
             <DefaultTextInput
               register={{ ...register('price') }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleMonetaryInputChange(e, 'price')
+                handleFormatThousands(e, 'price')
               }
             />
             <FormErrorMessage>

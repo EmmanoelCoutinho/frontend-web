@@ -132,10 +132,13 @@ function NovoAnuncio() {
       }
       setValue('bedroom', data.bedroom.toString());
       setValue('bathroom', data.bathroom.toString());
-      setValue('total_area', data.total_area ? data.total_area.toString() : null);
+      setValue(
+        'total_area',
+        data.total_area ? priceMask(data.total_area.toString()) : null
+      );
       setValue(
         'useful_area',
-        data.useful_area ? data.useful_area.toString() : null
+        data.useful_area ? priceMask(data.useful_area.toString()) : null
       );
       setValue('parking_spaces', data.parking_spaces.toString());
       setValue(
@@ -256,8 +259,12 @@ function NovoAnuncio() {
       bedroom: parseInt(data.bedroom),
       bathroom: parseInt(data.bathroom),
       parking_spaces: parseInt(data.parking_spaces),
-      useful_area: data.useful_area ? parseInt(data.useful_area) : null,
-      total_area: data?.total_area ? parseInt(data.total_area) : null,
+      useful_area: data.useful_area
+        ? parseInt(data.useful_area.replace(/\./g, ''))
+        : null,
+      total_area: data?.total_area
+        ? parseInt(data.total_area.replace(/\./g, ''))
+        : null,
       condon_price: data.condon_price
         ? parseInt(data.condon_price.replace(/\./g, ''))
         : null,

@@ -155,8 +155,12 @@ function NovoAnuncio() {
       bedroom: parseInt(data.bedroom),
       bathroom: parseInt(data.bathroom),
       parking_spaces: parseInt(data.parking_spaces),
-      useful_area: data.useful_area ? parseInt(data.useful_area) : null,
-      total_area: data?.total_area ? parseInt(data.total_area) : null,
+      useful_area: data.useful_area
+        ? parseInt(data.useful_area.replace(/\./g, ''))
+        : null,
+      total_area: data?.total_area
+        ? parseInt(data.total_area.replace(/\./g, ''))
+        : null,
       condon_price: data.condon_price
         ? parseInt(data.condon_price.replace(/\./g, ''))
         : null,

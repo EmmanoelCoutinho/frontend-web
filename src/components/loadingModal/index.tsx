@@ -13,10 +13,10 @@ const LoadingModal = ({ isLoading }: { isLoading: boolean }) => {
   return (
     <>
       {isLoading && (
-        <div className="flex justify-center items-center w-full h-screen bg-white absolute top-0 left-0 overflow-hidden z-50">
+        <div className="flex justify-center items-center w-full h-screen bg-white absolute top-0 left-0 overflow-hidden z-[100]">
           <span className="w-[250px] h-[250px] border-4 border-gray-300 border-t-orange-500 rounded-full animate-spin" />
           <Image
-            src={'/images/logo-si.png'}
+            src={'/logo-si.png'}
             style={{
               position: 'absolute',
               objectFit: 'cover',

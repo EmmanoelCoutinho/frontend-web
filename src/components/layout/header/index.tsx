@@ -56,7 +56,7 @@ function Header({ startsWithAdmin }: HeaderProps) {
             alignItems={'center'}
             color={'orange'}
           >
-            <Image w={16}  src={'/images/logo-si.png'} alt="Logo SantosNeves" />
+            <Image w={16}  src={'/logo-si.png'} alt="Logo SantosNeves" />
           </Flex>
         ) : (
           <Button
@@ -136,7 +136,7 @@ function Header({ startsWithAdmin }: HeaderProps) {
               alignItems={'center'}
               color={'orange'}
             >
-              <Image w={16} src={'/images/logo-si.png'} alt="Logo SantosNeves" />
+              <Image w={16} src={'/logo-si.png'} alt="Logo SantosNeves" />
             </Flex>
           </DrawerHeader>
 

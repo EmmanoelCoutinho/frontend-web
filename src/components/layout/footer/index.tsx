@@ -16,7 +16,7 @@ function Footer() {
       <div className="grid grid-cols-3 bg-gray-800 p-4 w-full  z-10 text-white font-medium">
         <div className="flex justify-center items-center">
           <Image
-            src={'/images/logo-si.png'}
+            src={'/logo-si.png'}
             style={{ objectFit: 'cover' }}
             width={'48px'}
             height={'48px'}

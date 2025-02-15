@@ -69,7 +69,7 @@ function Admin() {
       <div className="flex flex-col w-[500px] h-[300px] bg-gray-200 rounded-lg p-4">
         <span className="flex justify-center items-center w-full h-16">
           <Image
-            src={'/images/logo-si.png'}
+            src={'/logo-si.png'}
             style={{ objectFit: 'cover' }}
             width={'64px'}
             height={'64px'}

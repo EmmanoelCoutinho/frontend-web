@@ -78,7 +78,7 @@ function Header({ startsWithAdmin }: HeaderProps) {
                 key={index}
                 onClick={() => window.open(navItem.link, '_blank')}
                 cursor={'pointer'}
-                className="text-lg font-medium text-orange-600 hover:text-[#580CEA] text-nowrap"
+                className="text-lg font-medium text-zinc-600 hover:text-orange-600 text-nowrap"
               >
                 {navItem.title}
               </Text>

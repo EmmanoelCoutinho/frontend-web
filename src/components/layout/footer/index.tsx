@@ -69,7 +69,9 @@ function Footer() {
         </div>
       </div>
       <div className="flex flex-col justify-center items-center gap-2 md:gap-0 md:grid md:grid-cols-2 py-2 text-white bg-gray-800">
-        <span className="flex md:pl-14 items-center">
+        <span className="flex gap-4 md:pl-14 items-center">
+          <span>Versão 21.02</span>
+          <span>|</span>
           @2024 - Santosneves Imóveis
         </span>
         <span className="flex justify-end md:pr-14 items-center">

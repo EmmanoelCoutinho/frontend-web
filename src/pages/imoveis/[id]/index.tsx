@@ -4,6 +4,7 @@ import ImageSliderShow from '@/components/imageSliderShow';
 import LoadingModal from '@/components/loadingModal';
 import PageHeader from '@/components/pageHeader';
 import YouTubePlayer from '@/components/youtubePlayer';
+import { condoFeatures, propertyFeatures } from '@/constants/addFeaturesOptions';
 import { api } from '@/services/axios';
 import { PropertyType } from '@/types/enums/propertyEnum';
 import { Property } from '@/types/propertiesType';
@@ -89,7 +90,7 @@ function ImovelView() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-6 w-full h-full max-w-[400px] ">
+            <div className="flex flex-col gap-3 w-full h-full max-w-[400px] ">
               <div className="flex flex-col w-full h-full max-h-[300px] bg-gray-200 p-4 rounded-lg gap-2">
                 <span className="flex flex-row justify-between items-center w-full h-[50px] rounded-md bg-zinc-600 text-white px-4 text-xl md:text-base">
                   <span className="font-bold">
@@ -144,7 +145,7 @@ function ImovelView() {
                   />
                 </span>
               </div>
-              <div className="flex flex-col w-full h-full max-h-[300px] bg-gray-200 p-4 rounded-lg gap-2">
+              <div className="flex flex-col w-full h-full max-h-[310px] bg-gray-200 p-4 rounded-lg gap-2">
                 <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
                   Detalhes do Imóvel
                 </span>
@@ -221,6 +222,73 @@ function ImovelView() {
                   </SimpleGrid>
                 </div>
               </div>
+              {property &&
+                property.property_features &&
+                Object.values(property.property_features).some(
+                  (value) => value === true
+                ) && (
+                  <div className="flex flex-col w-full h-fit bg-gray-200 p-4 rounded-lg gap-2">
+                    <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
+                      Características do Imóvel
+                    </span>
+                    <SimpleGrid columns={2} spacingX={0} spacingY={4}>
+                      {property &&
+                        property.property_features &&
+                        propertyFeatures
+                          .filter(
+                            ({ value }) =>
+                              property.property_features?.[
+                                value as keyof typeof property.property_features
+                              ]
+                          )
+                          .map(({ title, Icon }) => (
+                            <span
+                              key={title}
+                              className="flex items-center gap-2 text-nowrap"
+                            >
+                              <Icon size={24} color="#EA580C" />
+                              <span className="text-sm font-semibold">
+                                {title}
+                              </span>
+                            </span>
+                          ))}
+                    </SimpleGrid>
+                  </div>
+                )}
+
+              {property &&
+                property.condo_features &&
+                Object.values(property.condo_features).some(
+                  (value) => value === true
+                ) && (
+                  <div className="flex flex-col w-full h-fit bg-gray-200 p-4 rounded-lg gap-2">
+                    <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
+                      Características do Condomínio
+                    </span>
+                    <SimpleGrid columns={2} spacingX={0} spacingY={4}>
+                      {property &&
+                        property.condo_features &&
+                        condoFeatures
+                          .filter(
+                            ({ value }) =>
+                              property.condo_features?.[
+                                value as keyof typeof property.condo_features
+                              ]
+                          )
+                          .map(({ title, Icon }) => (
+                            <span
+                              key={title}
+                              className="flex items-center gap-2 text-nowrap"
+                            >
+                              <Icon size={24} color="#EA580C" />
+                              <span className="text-sm font-semibold">
+                                {title}
+                              </span>
+                            </span>
+                          ))}
+                    </SimpleGrid>
+                  </div>
+                )}
             </div>
           </div>
         </div>

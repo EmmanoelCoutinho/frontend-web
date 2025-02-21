@@ -231,7 +231,11 @@ function ImovelView() {
                     <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
                       Características do Imóvel
                     </span>
-                    <SimpleGrid columns={2} spacingX={0} spacingY={4}>
+                    <SimpleGrid
+                      columns={{ sm: 1, md: 1, lg: 2, xl: 2 }}
+                      spacingX={0}
+                      spacingY={4}
+                    >
                       {property &&
                         property.property_features &&
                         propertyFeatures
@@ -247,7 +251,7 @@ function ImovelView() {
                               className="flex items-center gap-2 text-nowrap"
                             >
                               <Icon size={24} color="#EA580C" />
-                              <span className="text-sm font-semibold">
+                              <span className="text-xs font-semibold md:text-sm">
                                 {title}
                               </span>
                             </span>
@@ -265,7 +269,11 @@ function ImovelView() {
                     <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
                       Características do Condomínio
                     </span>
-                    <SimpleGrid columns={2} spacingX={0} spacingY={4}>
+                    <SimpleGrid
+                      columns={{ sm: 1, md: 1, lg: 2, xl: 2 }}
+                      spacingX={2}
+                      spacingY={4}
+                    >
                       {property &&
                         property.condo_features &&
                         condoFeatures
@@ -281,7 +289,7 @@ function ImovelView() {
                               className="flex items-center gap-2 text-nowrap"
                             >
                               <Icon size={24} color="#EA580C" />
-                              <span className="text-sm font-semibold">
+                              <span className="text-xs font-semibold md:text-sm">
                                 {title}
                               </span>
                             </span>

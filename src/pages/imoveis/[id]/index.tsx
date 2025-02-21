@@ -91,137 +91,149 @@ function ImovelView() {
             </div>
 
             <div className="flex flex-col gap-3 w-full h-full max-w-[400px] ">
-              <div className="flex flex-col w-full h-full max-h-[300px] bg-gray-200 p-4 rounded-lg gap-2">
-                <span className="flex flex-row justify-between items-center w-full h-[50px] rounded-md bg-zinc-600 text-white px-4 text-xl md:text-base">
-                  <span className="font-bold">
-                    {property?.Property_type
-                      ? translateEnumProperty(property.Property_type)
-                      : ''}
+              {!isLoading && (
+                <div className="flex flex-col w-full h-full max-h-[300px] bg-gray-200 p-4 rounded-lg gap-2">
+                  <span className="flex flex-row justify-between items-center w-full h-[50px] rounded-md bg-zinc-600 text-white px-4 text-xl md:text-base">
+                    <span className="font-bold">
+                      {property?.Property_type
+                        ? translateEnumProperty(property.Property_type)
+                        : ''}
+                    </span>
+                    <span>Código: {property?.id}</span>
                   </span>
-                  <span>Código: {property?.id}</span>
-                </span>
-                <span className="flex flex-col justify-start items-start w-full h-[50px] px-2 md:flex-row md:justify-between md:items-center">
-                  <span
-                    className={`font-bold uppercase ${
-                      property?.financeable ? 'text-green-600' : 'text-red-600'
-                    }`}
-                  >
-                    {property?.financeable ? 'Financiável' : 'Não financiável'}
-                  </span>
-                  <span className="font-bold text-xl">
-                    R${' '}
-                    {priceMask(
-                      property?.price ? property?.price.toString() : '0'
-                    )}
-                  </span>
-                </span>
-
-                {property?.iptu ||
-                  (property?.condon_price && (
-                    <div className="flex mb-2">
-                      {property?.iptu && (
-                        <span className="flex flex-col w-full justify-between items-start font-medium px-2">
-                          <span>IPTU</span>
-                          <span>R$ {property.iptu.toString()}</span>
-                        </span>
+                  <span className="flex flex-col justify-start items-start w-full h-[50px] px-2 md:flex-row md:justify-between md:items-center">
+                    <span
+                      className={`font-bold uppercase ${
+                        property?.financeable
+                          ? 'text-green-600'
+                          : 'text-red-600'
+                      }`}
+                    >
+                      {property?.financeable
+                        ? 'Financiável'
+                        : 'Não financiável'}
+                    </span>
+                    <span className="font-bold text-xl">
+                      R${' '}
+                      {priceMask(
+                        property?.price ? property?.price.toString() : '0'
                       )}
-                      {property?.condon_price && (
-                        <span className="flex flex-col w-full justify-between items-end font-medium px-2">
-                          <span> Condomínio</span>
-                          <span>
-                            R$ {priceMask(property.condon_price.toString())}
-                          </span>
-                        </span>
-                      )}
-                    </div>
-                  ))}
-
-                <span className="flex flex-row justify-around items-center w-full h-[50px]">
-                  <DefaultButton
-                    onClinkFunc={callRealtor}
-                    text="Entrar em contato"
-                    leftIcon={<FaWhatsapp size={20} />}
-                    orangeSchema
-                  />
-                </span>
-              </div>
-              <div className="flex flex-col w-full h-full max-h-[310px] bg-gray-200 p-4 rounded-lg gap-2">
-                <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
-                  Detalhes do Imóvel
-                </span>
-                <div className="flex flex-col w-full">
-                  <span className="flex items-center gap-2">
-                    <IconFrame icon={<FaLocationDot size={iconSize} />} />
-                    <span className="text-zinc-600 font-medium">
-                      {property?.address?.logradouro}
-                      {property?.address?.logradouro && ','}{' '}
-                      {property?.address?.localidade}/{property?.address?.uf}
                     </span>
                   </span>
-                  <SimpleGrid columns={3} className="mt-6">
-                    {property?.bedroom !== undefined &&
-                      property?.bedroom >= 0 && (
-                        <span className="flex items-center gap-2">
-                          <IconFrame icon={<FaBed size={iconSize} />} />
-                          <div className="flex flex-col justify-center items-center">
-                            <span className="text-zinc-600 font-medium text-sm">
-                              {verifyAndAddPlus(property?.bedroom)}
-                            </span>
-                            <span className="text-xs">Quarto(s)</span>
-                          </div>
-                        </span>
-                      )}
-                    {property?.bathroom !== undefined &&
-                      property.bathroom >= 0 && (
-                        <span className="flex items-center gap-2">
-                          <IconFrame icon={<FaShower size={iconSize} />} />
-                          <div className="flex flex-col justify-center items-center">
-                            <span className="text-zinc-600 font-medium text-sm">
-                              {verifyAndAddPlus(property?.bathroom)}
-                            </span>
-                            <span className="text-xs">Banheiro(s)</span>
-                          </div>
-                        </span>
-                      )}
-                    {property?.parking_spaces !== undefined &&
-                      property.parking_spaces >= 0 && (
-                        <span className="flex items-center gap-2 pl-4">
-                          <IconFrame icon={<FaCar size={iconSize} />} />
-                          <div className="flex flex-col justify-center items-center">
-                            <span className="text-zinc-600 font-medium text-sm">
-                              {verifyAndAddPlus(property?.parking_spaces)}
-                            </span>
-                            <span className="text-xs">Vaga(s)</span>
-                          </div>
-                        </span>
-                      )}
-                  </SimpleGrid>
-                  <SimpleGrid columns={3} className="mt-6">
-                    {property?.useful_area && (
-                      <span className="flex items-center gap-2 text-nowrap">
-                        <IconFrame icon={<FaRulerCombined size={iconSize} />} />
-                        <div className="flex flex-col justify-center items-center">
-                          <span className="text-zinc-600 font-medium text-xs">
-                            {priceMask(property?.useful_area?.toString())} m²
+
+                  {property?.iptu ||
+                    (property?.condon_price && (
+                      <div className="flex mb-2">
+                        {property?.iptu && (
+                          <span className="flex flex-col w-full justify-between items-start font-medium px-2">
+                            <span>IPTU</span>
+                            <span>R$ {property.iptu.toString()}</span>
                           </span>
-                          <span className="text-xs">Área Util</span>
-                        </div>
-                      </span>
-                    )}
-                    {property?.total_area && (
-                      <span className="flex items-center gap-2 text-nowrap">
-                        <IconFrame icon={<FaRulerCombined size={iconSize} />} />
-                        <div className="flex flex-col justify-center items-center">
-                          <span className="text-zinc-600 font-medium text-xs">
-                            {priceMask(property?.total_area.toString())} m²
+                        )}
+                        {property?.condon_price && (
+                          <span className="flex flex-col w-full justify-between items-end font-medium px-2">
+                            <span> Condomínio</span>
+                            <span>
+                              R$ {priceMask(property.condon_price.toString())}
+                            </span>
                           </span>
-                          <span className="text-xs">Área Total</span>
-                        </div>
-                      </span>
-                    )}
-                  </SimpleGrid>
+                        )}
+                      </div>
+                    ))}
+
+                  <span className="flex flex-row justify-around items-center w-full h-[50px]">
+                    <DefaultButton
+                      onClinkFunc={callRealtor}
+                      text="Entrar em contato"
+                      leftIcon={<FaWhatsapp size={20} />}
+                      orangeSchema
+                    />
+                  </span>
                 </div>
-              </div>
+              )}
+              {!isLoading && (
+                <div className="flex flex-col w-full h-full max-h-[310px] bg-gray-200 p-4 rounded-lg gap-2">
+                  <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-4">
+                    Detalhes do Imóvel
+                  </span>
+                  <div className="flex flex-col w-full">
+                    <span className="flex items-center gap-2">
+                      <IconFrame icon={<FaLocationDot size={iconSize} />} />
+                      <span className="text-zinc-600 font-medium">
+                        {property?.address?.logradouro}
+                        {property?.address?.logradouro && ','}{' '}
+                        {property?.address?.localidade}/{property?.address?.uf}
+                      </span>
+                    </span>
+                    <SimpleGrid columns={3} className="mt-6">
+                      {property?.bedroom !== undefined &&
+                        property?.bedroom >= 0 && (
+                          <span className="flex items-center gap-2">
+                            <IconFrame icon={<FaBed size={iconSize} />} />
+                            <div className="flex flex-col justify-center items-center">
+                              <span className="text-zinc-600 font-medium text-sm">
+                                {verifyAndAddPlus(property?.bedroom)}
+                              </span>
+                              <span className="text-xs">Quarto(s)</span>
+                            </div>
+                          </span>
+                        )}
+                      {property?.bathroom !== undefined &&
+                        property.bathroom >= 0 && (
+                          <span className="flex items-center gap-2">
+                            <IconFrame icon={<FaShower size={iconSize} />} />
+                            <div className="flex flex-col justify-center items-center">
+                              <span className="text-zinc-600 font-medium text-sm">
+                                {verifyAndAddPlus(property?.bathroom)}
+                              </span>
+                              <span className="text-xs">Banheiro(s)</span>
+                            </div>
+                          </span>
+                        )}
+                      {property?.parking_spaces !== undefined &&
+                        property.parking_spaces >= 0 && (
+                          <span className="flex items-center gap-2 pl-4">
+                            <IconFrame icon={<FaCar size={iconSize} />} />
+                            <div className="flex flex-col justify-center items-center">
+                              <span className="text-zinc-600 font-medium text-sm">
+                                {verifyAndAddPlus(property?.parking_spaces)}
+                              </span>
+                              <span className="text-xs">Vaga(s)</span>
+                            </div>
+                          </span>
+                        )}
+                    </SimpleGrid>
+                    <SimpleGrid columns={3} className="mt-6">
+                      {property?.useful_area && (
+                        <span className="flex items-center gap-2 text-nowrap">
+                          <IconFrame
+                            icon={<FaRulerCombined size={iconSize} />}
+                          />
+                          <div className="flex flex-col justify-center items-center">
+                            <span className="text-zinc-600 font-medium text-xs">
+                              {priceMask(property?.useful_area?.toString())} m²
+                            </span>
+                            <span className="text-xs">Área Util</span>
+                          </div>
+                        </span>
+                      )}
+                      {property?.total_area && (
+                        <span className="flex items-center gap-2 text-nowrap">
+                          <IconFrame
+                            icon={<FaRulerCombined size={iconSize} />}
+                          />
+                          <div className="flex flex-col justify-center items-center">
+                            <span className="text-zinc-600 font-medium text-xs">
+                              {priceMask(property?.total_area.toString())} m²
+                            </span>
+                            <span className="text-xs">Área Total</span>
+                          </div>
+                        </span>
+                      )}
+                    </SimpleGrid>
+                  </div>
+                </div>
+              )}
               {property &&
                 property.property_features &&
                 Object.values(property.property_features).some(

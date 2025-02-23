@@ -42,7 +42,7 @@ function Admin() {
 
       setTimeout(() => {
         window.location.href = '/admin/anuncios';
-      }, 2000);
+      }, 500);
 
     } catch (error) {
       toaster({

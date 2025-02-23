@@ -62,6 +62,7 @@ function DashboardAnuncios({ propertiesData }: DashboardAnunciosProps) {
           reloadFunc={() => getData()}
           page="anuncios"
           propertyId={property.id}
+          isFeatured={property.featured}
         />
       ),
     };

@@ -65,10 +65,10 @@ export default function Home() {
       const getAllProperties = async () => {
         setIsLoading(true);
         try {
-          const response = await api.get('properties');
+          const response = await api.get('properties/featured');
           const data = response.data;
 
-          setProperties(data.slice(0, 4));
+          setProperties(data);
         } catch (error) {
           console.log(error)
         }finally{

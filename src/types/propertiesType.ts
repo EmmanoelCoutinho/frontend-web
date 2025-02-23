@@ -41,6 +41,7 @@ export interface Property {
       actions: import('react').JSX.Element;
       id: number;
       title: string;
+      featured: boolean;
       modality: string;
       price: number;
       condon_price: number;
@@ -65,6 +66,7 @@ export interface Property {
   ): unknown;
   id: number;
   title: string;
+  featured: boolean;
   modality: string;
   price: number;
   condon_price: number;

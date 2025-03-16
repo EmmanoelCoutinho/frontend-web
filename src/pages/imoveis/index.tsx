@@ -13,9 +13,24 @@ import { useEffect, useState } from 'react';
 import { api } from '@/services/axios';
 import { Property } from '@/types/propertiesType';
 import LoadingModal from '@/components/loadingModal';
+import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation';
+import Pagination from '@/components/pagination';
+
+type Pagination = {
+  limit: string | number;
+  page: string | number;
+  total: number;
+  totalPages: number;
+};
 
 function Imoveis() {
+  const router = useRouter();
+  const query = router.query;  
+
   const [properties, setProperties] = useState<Property[]>([]);
+  const [paginationInfos, setPaginationInfos] = useState<Pagination>();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const {
@@ -44,23 +59,38 @@ function Imoveis() {
     console.log(formattedData);
   };
 
-  useEffect(() => {
-    const getAllProperties = async () => {
-      setIsLoading(true);
-      try {
-        const response = await api.get('properties');
-        const data = response.data;
+   async function getProperties (searchParams: any) {
+     setIsLoading(true);
+     try {
+       const response = await api.get('properties/filter', {
+         params: {
+           ...searchParams,
+           limit: 9
+         },
+       });
+       const data = response?.data?.data;
 
-        setProperties(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
+       setProperties(data);
+       delete response.data.data;
+       setPaginationInfos(response?.data)
+
+     } catch (error) {
+       console.log(error);
+     } finally {
+       setIsLoading(false);
+     }
+   };
+
+    const handlePageChange = (page: number) => {
+      router.push({pathname: 'imoveis', query: {
+        ...query,
+        page
+      }})
     };
 
-    getAllProperties();
-  }, []);
+  useEffect(() => {
+    query && getProperties(query);
+  }, [query]);
 
   return (
     <>
@@ -149,6 +179,10 @@ function Imoveis() {
           </SimpleGrid>
         </div>
       </div>
+      <Pagination
+        totalPages={paginationInfos?.totalPages ?? 0}
+        onPageChange={handlePageChange}
+      />
       {/* <FilterDrawer isOpen={isOpen} onClose={onClose} /> */}
       <LoadingModal isLoading={isLoading} />
     </>

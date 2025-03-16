@@ -1,10 +1,11 @@
 import * as z from 'zod';
 
 export const defaultFiltersSchema = z.object({
+  code: z.string().optional(),
   type: z.string().optional(),
   city: z.string().optional(),
   neighborhood: z.string().optional(),
-  financing: z.boolean().optional(),
+  financing: z.string().optional(),
   minPrice: z
     .string()
     .transform((value) => {

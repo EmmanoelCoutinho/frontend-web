@@ -85,17 +85,6 @@ export default function Home() {
     }
   };
 
-  //  page=1&
-  // limit=10&
-  // city=Belém&
-  // type=APARTMENT&
-  // minPrice=100000&
-  // maxPrice=500000&
-  // bedrooms=2&
-  // bathrooms=2&
-  // code=123&
-  // financeable=true
-
   const onSubmit: SubmitHandler<TypeFormData> = (data) => {
     const formattedData = {
       ...data,
@@ -149,7 +138,6 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col w-full h-full">
-        {/* mb-[700px] md:mb-[400px] lg:mb-[400px] */}
         <div className="w-full h-[650px] mb-[700px] md:mb-[400px] lg:mb-[400px] ">
           <Image
             src={randomPicture()}

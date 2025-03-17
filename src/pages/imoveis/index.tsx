@@ -126,6 +126,9 @@ function Imoveis() {
     }
   }
 
+  console.log(filterOption);
+  
+
   const handlePageChange = (page: number) => {
     router.push({
       pathname: 'imoveis',
@@ -187,7 +190,9 @@ function Imoveis() {
   useEffect(() => {
     if (query) {
       getProperties(query);
-      setFilterValues(query);
+      // setTimeout(() => {
+        setFilterValues(query);
+      // }, 500)
     }
   }, [query]);
 
@@ -206,8 +211,6 @@ function Imoveis() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  console.log(query);
 
   return (
     <>

@@ -58,7 +58,7 @@ function Imoveis() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { financing, city } = watch();
-  
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     field: 'minPrice' | 'maxPrice'
@@ -220,6 +220,11 @@ function Imoveis() {
 
   useEffect(() => {
     const handleScroll = () => {
+      if (properties.length === 0) {
+        setIsFixed(false);
+        return;
+      }
+
       if (window.scrollY > 465) {
         setIsFixed(true);
       } else {
@@ -232,7 +237,7 @@ function Imoveis() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [properties]);
 
   return (
     <>
@@ -244,14 +249,14 @@ function Imoveis() {
           />
           <div
             className={`hidden md:flex flex-col w-full max-w-[250px] h-fit shadow-lg bg-white rounded-r-lg overflow-x-hidden ${
-              isFixed ? 'fixed top-8' : ''
+              isFixed ? 'fixed top-0' : ''
             }`}
           >
             <span className="flex justify-center items-center font-medium text-zinc-600 bg-gray-300 w-full h-10">
               Buscar por Categorias
             </span>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex flex-col w-full h-full gap-4 pt-6 px-2 pb-4">
+              <div className="flex flex-col w-full h-full gap-2 pt-6 px-2 pb-4">
                 <DefaultSelect
                   options={transformToOptionArray(filterOption?.types)}
                   placeholder="Tipo de Imóvel"
@@ -348,7 +353,7 @@ function Imoveis() {
             <IoFilterSharp size={28} />
           </span> */}
           {properties?.length !== 0 ? (
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full px-4">
               <SimpleGrid
                 columns={{ sm: 1, md: 1, lg: 2, xl: 3 }}
                 spacingY={10}

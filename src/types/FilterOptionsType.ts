@@ -1,5 +1,6 @@
 export interface FilterOptions {
-  neighborhoods: string[];
+  neighborhoodsByCity: string[];
+  allNeighborhoods: string[];
   cities: string[];
   types: string[];
 }

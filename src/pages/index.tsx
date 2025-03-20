@@ -38,7 +38,8 @@ export default function Home() {
 
   const [properties, setProperties] = useState<Property[]>([]);
   const [filterOption, setFilterOptions] = useState<FilterOptions>({
-    neighborhoods: [],
+    neighborhoodsByCity: [],
+    allNeighborhoods: [],
     cities: [],
     types: [],
   });

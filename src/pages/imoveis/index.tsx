@@ -1,20 +1,18 @@
 import CardProperties from '@/components/cardProperties';
-import { Checkbox, SimpleGrid, useDisclosure } from '@chakra-ui/react';
+import { SimpleGrid, useDisclosure } from '@chakra-ui/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   defaultFiltersSchema,
   TypeFormData,
 } from '@/schemas/defaultFiltersSchema';
-import { IoFilterSharp } from 'react-icons/io5';
 import { priceMask } from '@/utils/priceMask';
 import PageHeader from '@/components/pageHeader';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { api } from '@/services/axios';
 import { Property } from '@/types/propertiesType';
 import LoadingModal from '@/components/loadingModal';
 import { useRouter } from 'next/router';
-import { useParams } from 'next/navigation';
 import Pagination from '@/components/pagination';
 import DefaultButton from '@/components/defaultButton';
 import DefaultTextInput from '@/components/defaultTextInput';
@@ -41,7 +39,8 @@ function Imoveis() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [paginationInfos, setPaginationInfos] = useState<Pagination>();
   const [filterOption, setFilterOptions] = useState<FilterOptions>({
-    neighborhoods: [],
+    neighborhoodsByCity: [],
+    allNeighborhoods: [],
     cities: [],
     types: [],
   });
@@ -58,8 +57,8 @@ function Imoveis() {
   } = useForm<TypeFormData>({ resolver: zodResolver(defaultFiltersSchema) });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { financing } = watch();
-
+  const { financing, city } = watch();
+  
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     field: 'minPrice' | 'maxPrice'
@@ -76,8 +75,6 @@ function Imoveis() {
       maxPrice: data.maxPrice?.replace(/\./g, '') ?? '',
       type: reverseTranslateEnumProperty(data.type),
     };
-
-    console.log(data);
 
     router.push({
       pathname: 'imoveis',
@@ -109,6 +106,12 @@ function Imoveis() {
 
       const data = filteredResponse?.data?.data;
 
+      const getAllNeighborhoods = (neighborhoodsByCity: {
+        [key: string]: string[];
+      }): string[] => {
+        return Object.values(neighborhoodsByCity).flatMap((bairros) => bairros);
+      };
+
       const translatedTypes = optionsResponse?.data?.types?.flatMap(
         (item: string) => {
           return translateEnumProperty(item);
@@ -118,7 +121,13 @@ function Imoveis() {
       setProperties(data);
       delete filteredResponse.data.data;
       setPaginationInfos(filteredResponse?.data);
-      setFilterOptions({ ...optionsResponse.data, types: translatedTypes });
+      setFilterOptions({
+        ...optionsResponse.data,
+        types: translatedTypes,
+        allNeighborhoods: getAllNeighborhoods(
+          optionsResponse.data.neighborhoodsByCity
+        ),
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -126,8 +135,20 @@ function Imoveis() {
     }
   }
 
-  console.log(filterOption);
-  
+  const filterOptionsNeighborhoods = useMemo(() => {
+    if (city) {
+      const normalizedCity = city.toLowerCase();
+
+      const cityKey = Object.keys(filterOption.neighborhoodsByCity).find(
+        (key) => key.toLowerCase() === normalizedCity
+      );
+
+      //@ts-ignore
+      return cityKey ? filterOption.neighborhoodsByCity[cityKey] : [];
+    }
+
+    return filterOption.allNeighborhoods || [];
+  }, [city, filterOption]);
 
   const handlePageChange = (page: number) => {
     router.push({
@@ -190,9 +211,9 @@ function Imoveis() {
   useEffect(() => {
     if (query) {
       getProperties(query);
-      // setTimeout(() => {
+      setTimeout(() => {
         setFilterValues(query);
-      // }, 500)
+      }, 1000);
     }
   }, [query]);
 
@@ -242,7 +263,7 @@ function Imoveis() {
                   register={{ ...register('city') }}
                 />
                 <DefaultSelect
-                  options={transformToOptionArray(filterOption?.neighborhoods)}
+                  options={transformToOptionArray(filterOptionsNeighborhoods)}
                   placeholder="Bairro"
                   register={{ ...register('neighborhood') }}
                 />

@@ -55,6 +55,7 @@ function Header({ startsWithAdmin }: HeaderProps) {
             justifyContent={'center'}
             alignItems={'center'}
             color={'orange'}
+            cursor={'pointer'}
             onClick={() => window.open('/', '_self')}
           >
             <Image w={16}  src={'/logo-si.png'} alt="Logo SantosNeves" />

@@ -56,8 +56,9 @@ export default function Home() {
     e: React.ChangeEvent<HTMLInputElement>,
     field: 'minPrice' | 'maxPrice'
   ) => {
-    const rawValue = e.target.value.replace(/\./g, '');
+    const rawValue = e.target.value.replace(/[^0-9]/g, '');
     const formattedValue = priceMask(rawValue);
+
     setValue(field, formattedValue);
   };
 
@@ -201,22 +202,22 @@ export default function Home() {
                   Selecione a faixa de Preço
                 </span>
                 <div className="flex justify-center items-center gap-4">
-                  <DefaultTextInput
-                    placeholder="Min."
-                    register={{
-                      ...register('minPrice', {
-                        onChange: (e) => handleInputChange(e, 'minPrice'),
-                      }),
-                    }}
-                  />
-                  <DefaultTextInput
-                    placeholder="Max."
-                    register={{
-                      ...register('maxPrice', {
-                        onChange: (e) => handleInputChange(e, 'maxPrice'),
-                      }),
-                    }}
-                  />
+                    <DefaultTextInput
+                      placeholder="Min."
+                      register={{
+                        ...register('minPrice', {
+                          onChange: (e) => handleInputChange(e, 'minPrice'),
+                        }),
+                      }}
+                    />
+                    <DefaultTextInput
+                      placeholder="Max."
+                      register={{
+                        ...register('maxPrice', {
+                          onChange: (e) => handleInputChange(e, 'maxPrice'),
+                        }),
+                      }}
+                    />
                 </div>
               </div>
               <div className="flex mt-2 md:mt-0">

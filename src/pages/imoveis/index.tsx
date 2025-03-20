@@ -63,8 +63,9 @@ function Imoveis() {
     e: React.ChangeEvent<HTMLInputElement>,
     field: 'minPrice' | 'maxPrice'
   ) => {
-    const rawValue = e.target.value.replace(/\./g, '');
+    const rawValue = e.target.value.replace(/[^0-9]/g, '');
     const formattedValue = priceMask(rawValue);
+
     setValue(field, formattedValue);
   };
 

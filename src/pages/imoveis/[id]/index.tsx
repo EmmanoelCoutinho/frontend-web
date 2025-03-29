@@ -94,7 +94,7 @@ function ImovelView() {
                 )}
               </div>
 
-              {/* <div className="flex flex-col">
+              <div className="flex flex-col">
                 <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-2 mt-6 text-lg">
                   Imóveis Semelhantes
                 </span>
@@ -107,7 +107,7 @@ function ImovelView() {
                     <CardProperties key={index} propertyDetails={property} />
                   ))}
                 </SimpleGrid>
-              </div> */}
+              </div>
             </div>
 
             <div className="flex flex-col gap-3 w-full h-full max-w-[400px] ">

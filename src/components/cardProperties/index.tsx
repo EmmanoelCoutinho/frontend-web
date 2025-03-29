@@ -23,7 +23,7 @@ function CardProperties({ propertyDetails }: { propertyDetails: Property }) {
   return (
     <div
       onClick={() => redirect(propertyDetails.id)}
-      className="flex flex-col h-[720px]  w-full max-w-[370px] m-auto rounded-lg overflow-hidden shadow-lg text-zinc-600 relative cursor-pointer"
+      className="flex flex-col h-[720px]  w-full max-w-[370px]  rounded-lg overflow-hidden shadow-lg text-zinc-600 relative cursor-pointer"
     >
       <span className="flex justify-center items-center absolute top-4 left-4 w-[100px] h-[30px] bg-orange-600 text-white font-medium rounded-md z-50">
         Cód: {propertyDetails.id}

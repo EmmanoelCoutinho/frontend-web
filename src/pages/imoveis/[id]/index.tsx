@@ -334,7 +334,7 @@ function ImovelView() {
               <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-2 mt-6 text-lg">
                 Imóveis Semelhantes
               </span>
-              <div className="overflow-x-scroll pb-2 scrollbar-thumb-orange-600">
+              <div className="overflow-x-scroll pb-2">
                 <SimpleGrid
                   columns={1}
                   className="flex w-[1100px] mt-4 gap-4 pb-10"

@@ -94,7 +94,7 @@ function ImovelView() {
                 )}
               </div>
 
-              <div className="flex flex-col">
+              <div className="hidden md:flex md:flex-col">
                 <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-2 mt-6 text-lg">
                   Imóveis Semelhantes
                 </span>
@@ -329,6 +329,21 @@ function ImovelView() {
                     </SimpleGrid>
                   </div>
                 )}
+            </div>
+            <div className="flex flex-col w-full max-w-[92vw] md:hidden">
+              <span className="w-fit font-bold border-b-2 border-zinc-600 pr-4 mb-2 mt-6 text-lg">
+                Imóveis Semelhantes
+              </span>
+              <div className="overflow-x-scroll pb-2 scrollbar-thumb-orange-600">
+                <SimpleGrid
+                  columns={1}
+                  className="flex w-[1100px] mt-4 gap-4 pb-10"
+                >
+                  {similarPorperties.map((property, index) => (
+                    <CardProperties key={index} propertyDetails={property} />
+                  ))}
+                </SimpleGrid>
+              </div>
             </div>
           </div>
         </div>

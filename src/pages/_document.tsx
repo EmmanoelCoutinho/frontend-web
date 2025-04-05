@@ -2,10 +2,9 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="pt-BR">
       <Head>
-        <link rel="shortcut icon" type="imagex/png" href="/logo-si.ico" />
-        <title>Santos Imóveis</title>
+        <link rel="icon" href="/favicon.png" type="image/x-icon" />
 
         <meta
           name="adopt-website-id"

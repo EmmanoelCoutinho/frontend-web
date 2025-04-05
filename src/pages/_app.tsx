@@ -8,6 +8,7 @@ import { CacheProvider } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { GoogleAnalytics } from 'nextjs-google-analytics';
+import Head from 'next/head';
 
 const queryClient = new QueryClient();
 
@@ -18,18 +19,23 @@ const emotionCache = createCache({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <CacheProvider value={emotionCache}>
-      <QueryClientProvider client={queryClient}>
-        <ChakraProvider>
-          <Layout>
-            <GoogleAnalytics
-              trackPageViews
-              gaMeasurementId={process.env.NEXT_PUBLIC_GA_ID}
-            />
-            <Component {...pageProps} />
-          </Layout>
-        </ChakraProvider>
-      </QueryClientProvider>
-    </CacheProvider>
+    <>
+      <Head>
+        <title>Santos Imóveis</title>
+      </Head>
+      <CacheProvider value={emotionCache}>
+        <QueryClientProvider client={queryClient}>
+          <ChakraProvider>
+            <Layout>
+              <GoogleAnalytics
+                trackPageViews
+                gaMeasurementId={process.env.NEXT_PUBLIC_GA_ID}
+              />
+              <Component {...pageProps} />
+            </Layout>
+          </ChakraProvider>
+        </QueryClientProvider>
+      </CacheProvider>
+    </>
   );
 }

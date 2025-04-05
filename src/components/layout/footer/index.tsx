@@ -70,7 +70,7 @@ function Footer() {
       </div>
       <div className="flex flex-col justify-center items-center gap-2 md:gap-0 md:grid md:grid-cols-2 py-2 text-white bg-gray-800">
         <span className="flex gap-2 md:pl-14 items-center">
-          <span>Versão 28.03</span>
+          <span>Versão 05.04</span>
           <span>|</span>
           @2024 - Santosneves Imóveis
         </span>

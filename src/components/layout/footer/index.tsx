@@ -58,7 +58,7 @@ function Footer() {
           <span
             onClick={() => {
               window.open(
-                'https://www.instagram.com/santosneves.imobiliaria',
+                'https://www.instagram.com/santos_imobiliaria07',
                 '_blank'
               );
             }}

@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Santos Imóveis</title>
+        <title>Santos Imóveis | Imobiliária em Belém | Compra e Venda Imóveis</title>
       </Head>
       <CacheProvider value={emotionCache}>
         <QueryClientProvider client={queryClient}>

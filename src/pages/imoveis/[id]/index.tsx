@@ -166,7 +166,7 @@ function ImovelView() {
                       onClinkFunc={callRealtor}
                       text="Entrar em contato"
                       leftIcon={<FaWhatsapp size={20} />}
-                      orangeSchema
+                      whatsappSchema
                     />
                   </span>
                 </div>

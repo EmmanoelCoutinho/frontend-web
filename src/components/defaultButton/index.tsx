@@ -10,7 +10,7 @@ interface IDefaultButton {
   orangeSchema?: boolean;
   onClinkFunc?: () => any;
   disabled?: boolean;
-  colorScheme?: string;
+  whatsappSchema?: boolean;
   isLoading?: boolean;
   isSearchButton?: boolean;
   leftIcon?: any;
@@ -25,8 +25,9 @@ function DefaultButton({
   disabled = false,
   isLoading,
   isSearchButton,
-  colorScheme,
+  whatsappSchema,
   leftIcon,
+  ...rest
 }: IDefaultButton) {
   const leftIconConfig = leftIcon ? (
     leftIcon
@@ -36,14 +37,21 @@ function DefaultButton({
     <></>
   );
 
+  const schemas = () => {
+    if (whatsappSchema) return 'bg-green-500 text-white hover:bg-green-600';
+    if (orangeSchema) return'bg-orange-600 text-white';
+    return 'bg-white text-orange-600';
+  }
+
+  const currentSchema = schemas();
+
   return (
     <Button
+      {...rest}
       isDisabled={disabled}
       type={buttonType ?? 'button'}
       onClick={onClinkFunc}
-      className={`w-full h-10 ${
-        orangeSchema ? 'bg-orange-600 text-white' : 'bg-white text-orange-600'
-      } rounded-lg text-sm font-medium hover:bg-[#580CEA] hover:text-white transition duration-300 ease-in-out transform px-4`}
+      className={`w-full h-10 ${currentSchema} rounded-lg text-sm font-medium hover:bg-[#580CEA] hover:text-white transition duration-300 ease-in-out transform px-4`}
       maxWidth={maxWidth}
       leftIcon={leftIconConfig}
     >

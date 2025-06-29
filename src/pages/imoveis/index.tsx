@@ -23,7 +23,8 @@ import {
 } from '@/utils/translateEnumProperty';
 import { FilterOptions } from '@/types/FilterOptionsType';
 import { transformToOptionArray } from '@/utils/tranformToOptionArray';
-import { IoTrashBinSharp } from 'react-icons/io5';
+import { IoFilterSharp, IoTrashBinSharp } from 'react-icons/io5';
+import FilterDrawer from '@/components/filtersDrawer';
 
 type Pagination = {
   limit: string | number;
@@ -216,6 +217,7 @@ function Imoveis() {
         setFilterValues(query);
       }, 1000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   useEffect(() => {
@@ -346,12 +348,12 @@ function Imoveis() {
             </form>
           </div>
 
-          {/* <span
+          <span
             onClick={onOpen}
             className="fixed bottom-6 right-6 z-10 flex justify-center items-center font-medium text-white bg-orange-600 w-14 h-14 rounded-full md:hidden"
           >
             <IoFilterSharp size={28} />
-          </span> */}
+          </span>
           {properties?.length !== 0 ? (
             <div className="flex flex-col w-full px-4">
               <SimpleGrid
@@ -377,7 +379,13 @@ function Imoveis() {
         </div>
       </div>
 
-      {/* <FilterDrawer isOpen={isOpen} onClose={onClose} /> */}
+      <FilterDrawer
+        isOpen={isOpen}
+        onClose={onClose}
+        filterOption={filterOption}
+        filterOptionsNeighborhoods={filterOptionsNeighborhoods}
+        query={query}
+      />
       <LoadingModal isLoading={isLoading} />
     </>
   );

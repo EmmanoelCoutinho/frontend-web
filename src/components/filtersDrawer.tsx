@@ -18,7 +18,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import DefaultSelect from './deafultSelect';
 import DefaultTextInput from './defaultTextInput';
 import DefaultButton from './defaultButton';
-import { reverseTranslateEnumProperty, translateEnumProperty } from '@/utils/translateEnumProperty';
+import {
+  reverseTranslateEnumProperty,
+  translateEnumProperty,
+} from '@/utils/translateEnumProperty';
 import { useRouter } from 'next/router';
 import { FilterOptions } from '@/types/FilterOptionsType';
 import { transformToOptionArray } from '@/utils/tranformToOptionArray';
@@ -38,7 +41,7 @@ function FilterDrawer({
   onClose,
   filterOption,
   filterOptionsNeighborhoods,
-  query
+  query,
 }: IFilterDrawer) {
   const router = useRouter();
 
@@ -133,9 +136,9 @@ function FilterDrawer({
       }
     };
 
-    setFilterValues(query)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query])
+    setFilterValues(query);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={'md'}>
@@ -224,13 +227,13 @@ function FilterDrawer({
               </div>
             </div>
           </form>
-           <span
-              onClick={resetFilters}
-              className="flex gap-1 mt-4 justify-center items-center bg-red-600 text-sm py-1 font-medium text-white w-full rounded-lg hover:bg-red-800 cursor-pointer"
-            >
-              <IoTrashBinSharp className="pt-0.5" />
-              <span>Limpar Filtros</span>
-            </span>
+          <span
+            onClick={resetFilters}
+            className="flex gap-1 mt-4 justify-center items-center bg-red-600 text-sm py-1 font-medium text-white w-full rounded-lg hover:bg-red-800 cursor-pointer"
+          >
+            <IoTrashBinSharp className="pt-0.5" />
+            <span>Limpar Filtros</span>
+          </span>
         </DrawerBody>
 
         <DrawerFooter>

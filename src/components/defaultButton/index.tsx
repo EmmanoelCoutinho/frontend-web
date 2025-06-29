@@ -39,9 +39,9 @@ function DefaultButton({
 
   const schemas = () => {
     if (whatsappSchema) return 'bg-green-500 text-white hover:bg-green-600';
-    if (orangeSchema) return'bg-orange-600 text-white';
+    if (orangeSchema) return 'bg-orange-600 text-white';
     return 'bg-white text-orange-600';
-  }
+  };
 
   const currentSchema = schemas();
 

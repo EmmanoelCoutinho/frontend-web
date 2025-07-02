@@ -6,6 +6,8 @@ export const translateEnumProperty = (enumValue: string) => {
       return 'Apartamento';
     case 'LAND':
       return 'Terreno';
+    case 'COMMERCIAL':
+      return 'Comercial'
   }
 };
 

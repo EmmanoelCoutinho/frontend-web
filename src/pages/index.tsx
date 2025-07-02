@@ -199,7 +199,7 @@ export default function Home() {
                   <span className="flex items-center gap-2">
                     <span className="font-medium text-lg">Tipo de Imóvel</span>
                     <CustomTooltip
-                      label="Escolha entre Apartamento, Casa ou Terreno. Deixe vazio para não filtrar."
+                      label="Escolha entre Apartamento, Casa,Terreno ou Comercial. Deixe vazio para não filtrar."
                       size={3.5}
                     />
                   </span>

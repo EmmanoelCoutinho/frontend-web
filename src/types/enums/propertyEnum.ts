@@ -2,6 +2,7 @@ export enum PropertyType {
   HOUSE,
   APARTMENT,
   LAND,
+  COMMERCIAL
 }
 
 export enum PropertySubtype {

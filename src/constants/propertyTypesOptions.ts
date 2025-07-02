@@ -4,6 +4,7 @@ export const propertyTypes = [
   { title: 'Casa', value: PropertyType.HOUSE },
   { title: 'Apartamento', value: PropertyType.APARTMENT },
   { title: 'Terreno', value: PropertyType.LAND },
+  { title: 'Comercial', value: PropertyType.COMMERCIAL},
 ];
 
 export const propertySubtypes = [

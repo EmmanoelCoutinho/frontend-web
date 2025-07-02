@@ -19,6 +19,8 @@ export const reverseTranslateEnumProperty = (translatedValue: string | undefined
       return 'APARTMENT';
     case 'Terreno':
       return 'LAND';
+    case 'Comercial':
+      return 'COMMERCIAL';
     default:
       return null;
   }

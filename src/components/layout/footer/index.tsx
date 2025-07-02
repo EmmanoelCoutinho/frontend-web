@@ -68,7 +68,7 @@ function Footer() {
           </span>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center gap-2 md:gap-0 md:grid md:grid-cols-2 py-2 text-white bg-gray-800">
+      <div className="flex flex-col justify-center items-center gap-2 md:gap-0 md:grid md:grid-cols-2 py-2 text-xs text-white bg-gray-800">
         <span className="flex gap-2 md:pl-14 items-center">
           <span>Versão 02.07</span>
           <span>|</span>

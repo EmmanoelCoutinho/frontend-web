@@ -114,7 +114,7 @@ function Header({ startsWithAdmin }: HeaderProps) {
           )}
         </Flex>
       </SimpleGrid>
-      <FilterDrawer isOpen={isOpen} onClose={onClose} />
+      {/* <FilterDrawer isOpen={isOpen} onClose={onClose} /> */}
       <Drawer
         isOpen={isOpenAsideMenu}
         placement="left"
